@@ -26,17 +26,30 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
     }
   }
 
+  // Details / Features
+  const details = selections.details?.join(', ');
+  if (details) parts.push(details);
+
   // Outfit
   const outfit = selections.outfit?.join(' and ');
   if (outfit) parts.push(`wearing ${outfit}`);
 
   // Base Action / Pose
   const pose = selections.pose?.join(' and ');
-  if (pose) parts.push(`while ${pose}`);
+  if (pose) parts.push(pose);
 
   // Setting / Context
   const setting = selections.setting?.join(' and ');
-  if (setting) parts.push(`in a ${setting}`);
+  const timeOfDay = selections.timeOfDay?.[0];
+  if (setting) {
+    if (timeOfDay) {
+      parts.push(`in a ${setting} at ${timeOfDay}`);
+    } else {
+      parts.push(`in a ${setting}`);
+    }
+  } else if (timeOfDay) {
+    parts.push(`at ${timeOfDay}`);
+  }
 
   // Props
   const props = selections.props?.join(' and ');
@@ -76,8 +89,12 @@ export function validatePrompt(selections: PromptSelections, promptText: string)
     warnings.push({ type: 'error', message: 'Missing Identity. Meta AI Imagine me requires a clear subject.' });
   }
 
-  if (promptText.length > 400) {
-    warnings.push({ type: 'warning', message: 'Prompt is quite long. Shorter, concise prompts often yield more reliable results in Meta AI.' });
+  if (promptText.length > 500) {
+    warnings.push({ type: 'warning', message: 'Prompt is very long. Meta AI might drop tokens after 500 characters.' });
+  }
+
+  if (selections.cameraAngle?.some(a => ['full-body', 'wide shot', 'top-down'].includes(a))) {
+    warnings.push({ type: 'warning', message: 'Distance Warning: Framing from too far away can distort facial features in "Imagine me". Consider "medium shot" or "close-up".' });
   }
 
   if (selections.style && selections.style.length > 2) {
