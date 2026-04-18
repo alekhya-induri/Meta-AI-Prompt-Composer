@@ -154,10 +154,10 @@ export default function App() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-300 blur-[120px]" />
       </div>
 
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col h-screen relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col min-h-[100dvh] md:h-[100dvh] relative z-10">
         
         {/* Header */}
-        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-4 border-b border-white/40 shadow-sm backdrop-blur-sm rounded-2xl p-4 bg-white/40">
+        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-4 border-b border-white/40 shadow-sm backdrop-blur-sm rounded-2xl p-4 bg-white/40 shrink-0">
           <div className="flex items-center gap-3 mb-4 sm:mb-0">
             <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg text-white">
               <Sparkles size={24} />
@@ -197,13 +197,13 @@ export default function App() {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 flex flex-col md:flex-row gap-6 min-h-0 overflow-hidden">
+        <main className="flex-1 flex flex-col md:flex-row gap-6 md:min-h-0 md:overflow-hidden pb-10 md:pb-0">
           
           {/* --- BUILD TAB --- */}
           {activeTab === 'build' && (
             <>
               {/* Left Panel: Inputs */}
-              <div className="w-full md:w-1/3 lg:w-1/4 flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white max-h-full overflow-hidden shadow-sm flex-shrink-0">
+              <div className="w-full md:w-1/3 lg:w-1/4 flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white md:max-h-full md:overflow-hidden shadow-sm flex-shrink-0 order-2 md:order-1">
                 <div className="p-4 border-b border-slate-100 bg-white/50 space-y-3">
                   <div className="flex gap-2">
                     <button onClick={handleSurpriseMe} className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-lg text-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2">
@@ -291,12 +291,12 @@ export default function App() {
               </div>
 
               {/* Center Panel: Live Preview & Actions */}
-              <div className="flex-1 flex flex-col gap-4 overflow-hidden">
-                <div className="flex-1 bg-white/60 backdrop-blur-md rounded-2xl border border-white shadow-sm p-6 flex flex-col">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+              <div className="flex-1 flex flex-col gap-4 md:overflow-hidden order-1 md:order-2">
+                <div className="flex-1 bg-white/90 md:bg-white/60 backdrop-blur-2xl rounded-2xl border border-white shadow-lg md:shadow-sm p-4 sm:p-6 flex flex-col sticky top-2 z-30 md:static">
+                  <div className="flex justify-between items-center mb-2 md:mb-4">
+                    <h2 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
                       Live Preview
-                      <span className="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
+                      <span className="text-[10px] sm:text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded-md hidden sm:inline-block">
                         {activePromptText.length} chars
                       </span>
                     </h2>
@@ -306,7 +306,7 @@ export default function App() {
                         // open some categories for visual feedback
                         setOpenCategories(prev => ({...prev, identity: true, setting: true}));
                       }} 
-                      className="text-xs font-bold uppercase tracking-wider text-purple-600 hover:text-purple-800 flex items-center gap-1"
+                      className="text-xs font-bold uppercase tracking-wider text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded-md"
                     >
                       <RefreshCcw size={14} /> Mix All
                     </button>
@@ -321,44 +321,41 @@ export default function App() {
                     }}
                     placeholder="Select options on the left to start building your prompt..."
                     className={cn(
-                      "flex-1 w-full p-6 text-lg font-medium leading-relaxed rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all shadow-inner",
+                      "w-full h-28 md:flex-1 md:h-auto p-3 sm:p-6 text-base sm:text-lg font-medium leading-snug sm:leading-relaxed rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all shadow-inner",
                       isManualEdit ? "bg-white border-2 border-blue-200 text-slate-800" : "bg-white/50 border border-slate-200 text-slate-700"
                     )}
                   />
                   {!isManualEdit && activePromptText && (
-                      <div className="mt-2 text-right">
-                         <button onClick={() => { setIsManualEdit(true); setManualText(activePromptText); }} className="text-xs text-blue-600 hover:underline">Click here to edit manually</button>
+                      <div className="mt-1 text-right">
+                         <button onClick={() => { setIsManualEdit(true); setManualText(activePromptText); }} className="text-[10px] sm:text-xs text-blue-600 hover:underline">Click here to edit manually</button>
                       </div>
                   )}
 
                   {/* Actions */}
-                  <div className="mt-6 flex flex-wrap gap-3">
+                  <div className="mt-3 md:mt-6 flex flex-wrap gap-2 sm:gap-3">
                     <button 
                       onClick={handleCopy}
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all shadow-md shadow-blue-500/20 active:scale-95"
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base font-semibold rounded-xl transition-all shadow-md shadow-blue-500/20 active:scale-95"
                     >
-                      <Copy size={18} /> Copy Prompt
+                      <Copy size={16} /> Copy
                     </button>
                     <button 
                       onClick={handleSavePreset}
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold rounded-xl transition-all shadow-sm active:scale-95"
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-sm sm:text-base font-semibold rounded-xl transition-all shadow-sm active:scale-95"
                     >
-                      <Save size={18} /> Save Preset
+                      <Save size={16} /> Save<span className="hidden sm:inline"> Preset</span>
                     </button>
                     
-                    <div className="w-full sm:w-auto flex pr-0 sm:pr-4 sm:ml-auto gap-2">
-                       <button onClick={() => exportPromptToFile(activePromptText, 'txt')} className="flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl text-sm transition-all" title="Export as TXT">
+                    <div className="w-full sm:w-auto flex flex-1 sm:pr-4 sm:ml-auto gap-2">
+                       <button onClick={() => exportPromptToFile(activePromptText, 'txt')} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl text-sm transition-all" title="Export as TXT">
                          <FileText size={16} /> TXT
-                       </button>
-                       <button onClick={() => exportPromptToFile(activePromptText, 'json')} className="flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl text-sm transition-all" title="Export as JSON">
-                         <FileJson size={16} /> JSON
                        </button>
                     </div>
                   </div>
                 </div>
 
                 {/* Validation Panel */}
-                <div className="bg-white/60 backdrop-blur-md rounded-2xl border border-white shadow-sm p-4 overflow-y-auto max-h-48">
+                <div className="bg-white/60 backdrop-blur-md rounded-2xl border border-white shadow-sm p-4 overflow-y-auto max-h-48 md:block order-2">
                   <h3 className="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">AI Check</h3>
                   <div className="space-y-2">
                     {validationWarnings.map((warning, i) => (
