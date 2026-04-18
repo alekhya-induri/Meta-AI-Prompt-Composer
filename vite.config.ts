@@ -4,6 +4,7 @@ import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
+  base: '/Meta-AI-Prompt-Composer/',
   const env = loadEnv(mode, '.', '');
   return {
     plugins: [react(), tailwindcss()],
