@@ -4,9 +4,9 @@ import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
-  base: '/Meta-AI-Prompt-Composer/',
   const env = loadEnv(mode, '.', '');
   return {
+    base: '/Meta-AI-Prompt-Composer/',
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
