@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Sparkles, Save, Copy, Download, RefreshCcw, Search, ChevronDown, ChevronRight, 
-  Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video
+  Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video, MessageSquare, Image as ImageIcon
 } from 'lucide-react';
 import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS, OPTION_DESCRIPTIONS } from './data';
-import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt } from './utils';
+import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt, generateSocialCaption } from './utils';
 
 // --- Types ---
 interface Preset {
@@ -25,7 +25,9 @@ type TabType = 'build' | 'presets' | 'history' | 'help' | 'examples';
 
 // --- Main App Component ---
 export default function App() {
+  // State: Tab navigation
   const [activeTab, setActiveTab] = useState<TabType>('build');
+  const [outputTab, setOutputTab] = useState<'image' | 'video' | 'caption'>('image');
   
   // State: Selections
   const [selections, setSelections] = useState<PromptSelections>({});
@@ -74,6 +76,7 @@ export default function App() {
   const generatedText = useMemo(() => generatePromptText(selections, false), [selections]);
   const activePromptText = isManualEdit ? manualText : generatedText;
   const animationPromptText = useMemo(() => generateAnimationPrompt(selections), [selections]);
+  const socialCaptionText = useMemo(() => generateSocialCaption(selections), [selections]);
   const validationWarnings = useMemo(() => validatePrompt(selections, activePromptText), [selections, activePromptText]);
 
   // Handlers
@@ -123,6 +126,11 @@ export default function App() {
   const handleCopyAnimation = () => {
     navigator.clipboard.writeText(animationPromptText);
     alert("Animation prompt copied to clipboard!");
+  };
+
+  const handleCopyCaption = () => {
+    navigator.clipboard.writeText(socialCaptionText);
+    alert("Social caption copied to clipboard!");
   };
 
   const handleSavePreset = () => {
@@ -305,87 +313,141 @@ export default function App() {
               {/* Center Panel: Live Preview & Actions */}
               <div className="flex-1 flex flex-col gap-4 md:overflow-hidden order-1 md:order-2">
                 <div className="flex-1 bg-white/90 md:bg-white/60 backdrop-blur-2xl rounded-2xl border border-white shadow-lg md:shadow-sm p-4 sm:p-6 flex flex-col sticky top-2 z-30 md:static">
-                  <div className="flex justify-between items-center mb-2 md:mb-4">
-                    <h2 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
-                      Live Preview
-                      <span className="text-[10px] sm:text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded-md hidden sm:inline-block">
-                        {activePromptText.length} chars
-                      </span>
-                    </h2>
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex bg-slate-100 p-1 rounded-xl w-full sm:w-auto">
+                      <button
+                        onClick={() => setOutputTab('image')}
+                        className={cn(
+                          "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all flex-1 sm:flex-none justify-center",
+                          outputTab === 'image' ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                        )}
+                      >
+                        <ImageIcon size={16} /> <span className="hidden sm:inline">Image Prompt</span><span className="sm:hidden">Image</span>
+                      </button>
+                      <button
+                        onClick={() => setOutputTab('video')}
+                        className={cn(
+                          "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all flex-1 sm:flex-none justify-center",
+                          outputTab === 'video' ? "bg-indigo-50 text-indigo-700 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                        )}
+                      >
+                        <Video size={16} /> <span className="hidden sm:inline">Animate Video</span><span className="sm:hidden">Video</span>
+                      </button>
+                      <button
+                        onClick={() => setOutputTab('caption')}
+                        className={cn(
+                          "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all flex-1 sm:flex-none justify-center",
+                          outputTab === 'caption' ? "bg-pink-50 text-pink-600 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                        )}
+                      >
+                        <MessageSquare size={16} /> <span className="hidden sm:inline">Social Caption</span><span className="sm:hidden">Caption</span>
+                      </button>
+                    </div>
+                    
                     <button 
                       onClick={() => {
                         handleRandomizeAll();
-                        // open some categories for visual feedback
                         setOpenCategories(prev => ({...prev, identity: true, setting: true}));
                       }} 
-                      className="text-xs font-bold uppercase tracking-wider text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 md:bg-transparent px-2 md:px-0 py-1 md:py-0 rounded-md"
+                      className="hidden md:flex text-xs font-bold uppercase tracking-wider text-purple-600 hover:text-purple-800 items-center gap-1 px-2 py-1 bg-purple-50 rounded-md ml-4 shrink-0 transition-colors"
                     >
                       <RefreshCcw size={14} /> Mix All
                     </button>
                   </div>
                   
-                  <textarea
-                    readOnly={!isManualEdit}
-                    value={activePromptText}
-                    onChange={(e) => {
-                      setIsManualEdit(true);
-                      setManualText(e.target.value);
-                    }}
-                    placeholder="Select options on the left to start building your prompt..."
-                    className={cn(
-                      "w-full h-28 md:flex-1 md:h-auto p-3 sm:p-6 text-base sm:text-lg font-medium leading-snug sm:leading-relaxed rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all shadow-inner",
-                      isManualEdit ? "bg-white border-2 border-blue-200 text-slate-800" : "bg-white/50 border border-slate-200 text-slate-700"
+                  <div className="flex-1 flex flex-col bg-white/50 rounded-xl overflow-hidden shadow-inner border border-slate-200">
+                    {outputTab === 'image' && (
+                      <>
+                        <div className="bg-slate-100/50 px-4 py-2 border-b border-slate-200 flex justify-between items-center text-xs text-slate-500 font-medium">
+                          <span>Main Image Text Prompt</span>
+                          <span>{activePromptText.length} characters</span>
+                        </div>
+                        <textarea
+                          readOnly={!isManualEdit}
+                          value={activePromptText}
+                          onChange={(e) => {
+                            setIsManualEdit(true);
+                            setManualText(e.target.value);
+                          }}
+                          placeholder="Select options on the left to start building your prompt..."
+                          className={cn(
+                            "w-full h-40 md:flex-1 p-4 text-base sm:text-lg font-medium leading-relaxed resize-none focus:outline-none transition-all",
+                            isManualEdit ? "bg-white text-slate-800" : "bg-transparent text-slate-700"
+                          )}
+                        />
+                        {!isManualEdit && activePromptText && (
+                            <div className="px-4 pb-2 text-right">
+                               <button onClick={() => { setIsManualEdit(true); setManualText(activePromptText); }} className="text-[10px] sm:text-xs text-blue-600 hover:underline">Click here to edit manually</button>
+                            </div>
+                        )}
+                        <div className="p-3 border-t border-slate-200 bg-white/80 flex flex-wrap gap-2">
+                          <button 
+                            onClick={handleCopy}
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-blue-500/20 active:scale-95"
+                          >
+                            <Copy size={16} /> Copy
+                          </button>
+                          <button 
+                            onClick={handleSavePreset}
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-lg transition-all"
+                          >
+                            <Save size={16} /> Save
+                          </button>
+                          <button 
+                            onClick={() => exportPromptToFile(activePromptText, 'txt')} 
+                            className="w-full sm:w-auto mt-2 sm:mt-0 sm:ml-auto flex items-center justify-center gap-2 px-4 py-2 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"
+                          >
+                            <FileText size={16} /> Export TXT
+                          </button>
+                        </div>
+                      </>
                     )}
-                  />
-                  {!isManualEdit && activePromptText && (
-                      <div className="mt-1 text-right">
-                         <button onClick={() => { setIsManualEdit(true); setManualText(activePromptText); }} className="text-[10px] sm:text-xs text-blue-600 hover:underline">Click here to edit manually</button>
-                      </div>
-                  )}
 
-                  {/* Actions */}
-                  <div className="mt-3 md:mt-6 flex flex-wrap gap-2 sm:gap-3">
-                    <button 
-                      onClick={handleCopy}
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base font-semibold rounded-xl transition-all shadow-md shadow-blue-500/20 active:scale-95"
-                    >
-                      <Copy size={16} /> Copy
-                    </button>
-                    <button 
-                      onClick={handleSavePreset}
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-sm sm:text-base font-semibold rounded-xl transition-all shadow-sm active:scale-95"
-                    >
-                      <Save size={16} /> Save<span className="hidden sm:inline"> Preset</span>
-                    </button>
-                    
-                    <div className="w-full sm:w-auto flex flex-1 sm:pr-4 sm:ml-auto gap-2">
-                       <button onClick={() => exportPromptToFile(activePromptText, 'txt')} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl text-sm transition-all" title="Export as TXT">
-                         <FileText size={16} /> TXT
-                       </button>
-                    </div>
-                  </div>
+                    {outputTab === 'video' && (
+                      <>
+                        <div className="bg-indigo-100/50 px-4 py-2 border-b border-indigo-100 flex justify-between items-center text-xs text-indigo-600 font-medium tracking-wide uppercase">
+                          <span>Animation Context + Safety Guardrails</span>
+                        </div>
+                        <div className="flex-1 p-4 bg-indigo-50/20">
+                          <textarea 
+                            readOnly
+                            value={animationPromptText}
+                            className="w-full h-full min-h-[140px] bg-transparent resize-none focus:outline-none text-slate-700 font-medium text-base sm:text-lg leading-relaxed custom-scrollbar"
+                          />
+                        </div>
+                        <div className="p-3 border-t border-indigo-100 bg-white flex flex-wrap gap-2">
+                          <button 
+                            onClick={handleCopyAnimation}
+                            className="flex-1 flex items-center justify-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-indigo-500/20 active:scale-95"
+                          >
+                            <Copy size={16} /> Copy for Animate
+                          </button>
+                        </div>
+                      </>
+                    )}
 
-                  {/* Video Animation Prompt */}
-                  <div className="mt-4 bg-indigo-50/50 backdrop-blur-md rounded-2xl border border-indigo-100 shadow-sm overflow-hidden flex flex-col">
-                    <div className="bg-indigo-100/50 px-4 py-2 flex items-center justify-between border-b border-indigo-100">
-                      <div className="flex items-center gap-2 text-indigo-700 font-semibold text-sm">
-                        <Video size={16} />
-                        <span>Video Animation Prompt</span>
-                      </div>
-                      <button 
-                        onClick={handleCopyAnimation}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-lg text-xs font-semibold transition-all shadow-sm border border-indigo-100"
-                      >
-                        <Copy size={14} /> Copy for Animate
-                      </button>
-                    </div>
-                    <div className="p-4 bg-indigo-50/30">
-                       <textarea 
-                         readOnly
-                         value={animationPromptText}
-                         className="w-full h-20 bg-transparent resize-none focus:outline-none text-slate-700 font-medium text-sm sm:text-base leading-snug custom-scrollbar"
-                       />
-                    </div>
+                    {outputTab === 'caption' && (
+                      <>
+                        <div className="bg-pink-100/50 px-4 py-2 border-b border-pink-100 flex justify-between items-center text-xs text-pink-600 font-medium tracking-wide uppercase">
+                          <span>Social Media Copy & Hashtags</span>
+                        </div>
+                        <div className="flex-1 p-4 bg-pink-50/20">
+                          <textarea 
+                            readOnly
+                            value={socialCaptionText}
+                            className="w-full h-full min-h-[140px] bg-transparent resize-none focus:outline-none text-slate-700 font-medium text-base sm:text-lg leading-relaxed custom-scrollbar"
+                          />
+                        </div>
+                        <div className="p-3 border-t border-pink-100 bg-white flex flex-wrap gap-2">
+                          <button 
+                            onClick={handleCopyCaption}
+                            className="flex-1 flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-pink-500/20 active:scale-95"
+                          >
+                            <Copy size={16} /> Copy Caption
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
