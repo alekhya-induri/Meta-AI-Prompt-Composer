@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Sparkles, Save, Copy, Download, RefreshCcw, Search, ChevronDown, ChevronRight, 
-  Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson
+  Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video
 } from 'lucide-react';
 import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS, OPTION_DESCRIPTIONS } from './data';
-import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn } from './utils';
+import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt } from './utils';
 
 // --- Types ---
 interface Preset {
@@ -73,6 +73,7 @@ export default function App() {
   // Derived state
   const generatedText = useMemo(() => generatePromptText(selections, false), [selections]);
   const activePromptText = isManualEdit ? manualText : generatedText;
+  const animationPromptText = useMemo(() => generateAnimationPrompt(selections), [selections]);
   const validationWarnings = useMemo(() => validatePrompt(selections, activePromptText), [selections, activePromptText]);
 
   // Handlers
@@ -117,6 +118,11 @@ export default function App() {
     navigator.clipboard.writeText(activePromptText);
     handleSaveToHistory();
     alert("Prompt copied to clipboard!");
+  };
+
+  const handleCopyAnimation = () => {
+    navigator.clipboard.writeText(animationPromptText);
+    alert("Animation prompt copied to clipboard!");
   };
 
   const handleSavePreset = () => {
@@ -356,6 +362,29 @@ export default function App() {
                        <button onClick={() => exportPromptToFile(activePromptText, 'txt')} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl text-sm transition-all" title="Export as TXT">
                          <FileText size={16} /> TXT
                        </button>
+                    </div>
+                  </div>
+
+                  {/* Video Animation Prompt */}
+                  <div className="mt-4 bg-indigo-50/50 backdrop-blur-md rounded-2xl border border-indigo-100 shadow-sm overflow-hidden flex flex-col">
+                    <div className="bg-indigo-100/50 px-4 py-2 flex items-center justify-between border-b border-indigo-100">
+                      <div className="flex items-center gap-2 text-indigo-700 font-semibold text-sm">
+                        <Video size={16} />
+                        <span>Video Animation Prompt</span>
+                      </div>
+                      <button 
+                        onClick={handleCopyAnimation}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-lg text-xs font-semibold transition-all shadow-sm border border-indigo-100"
+                      >
+                        <Copy size={14} /> Copy for Animate
+                      </button>
+                    </div>
+                    <div className="p-4 bg-indigo-50/30">
+                       <textarea 
+                         readOnly
+                         value={animationPromptText}
+                         className="w-full h-20 bg-transparent resize-none focus:outline-none text-slate-700 font-medium text-sm sm:text-base leading-snug custom-scrollbar"
+                       />
                     </div>
                   </div>
                 </div>

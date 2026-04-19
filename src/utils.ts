@@ -72,6 +72,54 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
   return parts.join(', ') + (parts.length > 0 ? '.' : '');
 }
 
+export function generateAnimationPrompt(selections: PromptSelections): string {
+  const motions: string[] = ["Gentle breathing, slow natural blinking."];
+  
+  const settingStr = (selections.setting || []).join(' ').toLowerCase();
+  const propsStr = (selections.props || []).join(' ').toLowerCase();
+  const lightingStr = (selections.lighting || []).join(' ').toLowerCase();
+  const outfitStr = (selections.outfit || []).join(' ').toLowerCase();
+  const detailsStr = (selections.details || []).join(' ').toLowerCase();
+  const identityStr = (selections.identity || []).join(' ').toLowerCase();
+
+  // Settings/Environment
+  if (settingStr.includes('rain') || settingStr.includes('storm') || settingStr.includes('slicked')) motions.push("Rain falling in the background.");
+  if (settingStr.includes('neon') || settingStr.includes('cyberpunk') || settingStr.includes('tokyo crosswalk')) motions.push("Neon lights flickering gently.");
+  if (settingStr.includes('forest') || settingStr.includes('garden') || settingStr.includes('tree') || settingStr.includes('jungle')) motions.push("Leaves rustling softly in the background.");
+  if (settingStr.includes('ocean') || settingStr.includes('beach') || settingStr.includes('water') || settingStr.includes('reef')) motions.push("Water shimmering and rippling softly.");
+  if (settingStr.includes('snow') || settingStr.includes('blizzard')) motions.push("Snowflakes drifting softly through the air.");
+  if (settingStr.includes('fire') || settingStr.includes('candle') || lightingStr.includes('fire')) motions.push("Flames flickering softly casting dynamic shadows.");
+  if (settingStr.includes('space') || settingStr.includes('galaxy') || settingStr.includes('stars')) motions.push("Stars twinkling slowly in the distant background.");
+  
+  // Props
+  if (propsStr.includes('coffee') || propsStr.includes('tea') || propsStr.includes('steaming') || propsStr.includes('test tube')) motions.push("Steam gently rising from the prop.");
+  if (propsStr.includes('smoke') || propsStr.includes('cigar')) motions.push("Smoke drifting slowly upwards.");
+  if (propsStr.includes('sword') || propsStr.includes('staff') || propsStr.includes('crystal')) motions.push("Soft magical glow pulsing from the prop.");
+  if (propsStr.includes('umbrella')) motions.push("Rain drops softly hitting the umbrella.");
+
+  // Outfit
+  if (outfitStr.includes('dress') || outfitStr.includes('robe') || outfitStr.includes('cloak') || outfitStr.includes('sari') || outfitStr.includes('tutu')) motions.push("Fabric swaying slightly in a subtle breeze.");
+
+  // Hair/Details
+  if (detailsStr.includes('hair') || detailsStr.includes('bun') || identityStr.includes('flapper') || detailsStr.includes('wavy')) {
+      motions.push("Hair gently moving in a soft breeze.");
+  }
+
+  // Lighting
+  if (lightingStr.includes('flash') || lightingStr.includes('strobe') || lightingStr.includes('lightning')) motions.push("Subtle light flashes illuminating the scene.");
+  if (lightingStr.includes('fog')) motions.push("Thick fog rolling slowly across the background.");
+
+  // Base motion fallback if no triggers hit
+  if (motions.length === 1 && (settingStr.length > 0 || lightingStr.length > 0)) {
+      motions.push("Subtle atmospheric motion in the background.");
+  }
+
+  const guardrail = "Static camera, no panning. Subject remains perfectly still. Keep facial features completely stable with no distortion or morphing.";
+
+  const motionText = Array.from(new Set(motions)).join(' ');
+  return `${motionText} ${guardrail}`;
+}
+
 export interface ValidationWarning {
   type: 'warning' | 'error' | 'success';
   message: string;
