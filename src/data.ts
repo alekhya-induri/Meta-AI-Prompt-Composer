@@ -6,7 +6,9 @@ export const PROMPT_OPTIONS = {
     "doctor", "artist", "musician", "gamer", "traveler", "scientist", "detective", "chef", 
     "pirate", "samurai", "pilot", "entrepreneur", "athlete", "photographer", "desert nomad",
     "software developer", "content creator", "yoga instructor", "freelancer", "vintage fashion enthusiast", 
-    "cyberpunk street samurai", "boho traveler", "indie musician"
+    "cyberpunk street samurai", "boho traveler", "indie musician",
+    "podcast host", "barista", "florist", "news anchor", "makeup artist", "vlogger", "DJ", "friendly librarian", "mountain climber", "botanist", "jazz singer", "tech CEO", "royal princess", "regal queen", "noble king", "handsome prince", "anime protagonist", "fantasy RPG cosplayer", "ethereal elf", "magical wizard",
+    "Greek god", "ancient Egyptian pharaoh", "majestic vampire", "ethereal mermaid", "mischievous fairy", "Viking raider", "Roman gladiator", "1920s flapper", "post-apocalyptic survivor", "Formula 1 driver", "professional snowboarder", "graceful ballerina", "cyborg android", "mad scientist"
   ],
   details: [
     "natural glowing skin", "sharp facial features", "soft youthful features", "athletic toned physique", 
@@ -15,7 +17,9 @@ export const PROMPT_OPTIONS = {
     "expressive eyes", "subtle day makeup", "bold artistic makeup", "natural unedited look",
     "freckles", "dimples", "thick expressive eyebrows", "glasses with wire frames", "bold winged eyeliner", 
     "subtle lip gloss", "messy bun", "braided hair", "slicked back hair", "well proportioned full-figured hourglass silhouette", 
-    "tall stature", "chiseled jawline", "soft jawline"
+    "tall stature", "chiseled jawline", "soft jawline",
+    "joyful laugh lines", "piercing gaze", "gentle highlights in hair", "subtle blush", "expressive hand gestures near face", "wind-blown hair", "soft freckles", "intense eye contact", "radiant smile", "intricate face paint", "elf ears", "dramatic anime-style makeup", "glowing ethereal skin",
+    "glowing supernatural eyes", "vampire fangs", "war paint", "battle scars", "cybernetic facial implants", "intricate henna tattoos", "glittering aquatic scales on cheeks", "sweat-glistening skin", "smudged dirt on cheeks"
   ],
   outfit: [
     "casual minimalist clothes", "oversized linen shirt", "ribbed knit top and jeans", "smart casual blazer", 
@@ -24,7 +28,9 @@ export const PROMPT_OPTIONS = {
     "futuristic cyberpunk gear", "leather jacket and boots", "bohemian summer dress", "luxurious velvet robe", 
     "beachwear", "winter coat", "chef uniform", "turtleneck and trench coat", "flowy summer sundress", 
     "baggy Y2K streetwear", "embroidered ethnic tunic", "minimalist monochrome outfit", "sequined party dress", 
-    "vintage sports jersey", "tailored waistcoat", "denim jacket and white tee", "cozy oversized hoodie"
+    "vintage sports jersey", "tailored waistcoat", "denim jacket and white tee", "cozy oversized hoodie",
+    "cashmere turtleneck", "flannel shirt", "denim overalls", "winter scarf and beanie", "leather aviator jacket", "silk bomber jacket", "heavy knitted cardigan", "ornate royal crown and robes", "jewel-encrusted tiara", "medieval knight armor", "elaborate anime cosplay outfit", "velvet Victorian gown", "tactical tech-wear vest",
+    "heavy fur-lined Viking cloak", "shining silver plate armor", "Roman gladiator chest plate", "1920s sequined dress", "weathered leather duster", "Formula 1 racing suit", "protective snow gear", "elegant ballet tutu", "post-apocalyptic scavenger gear", "tattered gothic robes"
   ],
   setting: [
     "sun-drenched minimalist apartment", "cozy dimly lit cafe", "bustling global city street", "neon-lit cyberpunk alley", 
@@ -33,7 +39,9 @@ export const PROMPT_OPTIONS = {
     "futuristic metropolis", "train station platform", "luxury hotel lobby", "quiet library", "concert stage",
     "minimalist Tokyo cafe", "rain-slicked city streets", "high-rise apartment balcony", "botanical greenhouse", 
     "hidden speakeasy bar", "rooftop garden at dusk", "subway train carriage", "ancient ruins", "desert oasis", 
-    "art gallery exhibition"
+    "art gallery exhibition",
+    "recording studio", "botanical garden path", "cozy reading nook", "neon-lit diner booth", "art studio filled with canvas", "sunlit kitchen", "record store aisle", "grand castle throne room", "enchanted fantasy forest", "cherry blossom courtyard", "neon Tokyo crosswalk", "royal ballroom",
+    "ancient Mount Olympus", "dark Gothic castle", "underwater coral reef", "Viking longship in a storm", "Roman Colosseum", "1920s speakeasy", "post-apocalyptic wasteland", "snowy mountain peak", "neon-lit underground racing track", "zero-gravity space station"
   ],
   timeOfDay: [
     "dawn", "sunrise", "early morning", "morning", "noon", "golden hour", "late afternoon", 
@@ -51,37 +59,47 @@ export const PROMPT_OPTIONS = {
     "arms crossed", "hands in pockets", "meditating", "posing dynamically",
     "looking up at the camera", "looking down at the camera", "fixing hair", "adjusting glasses", 
     "holding a coffee cup", "leaning back casually", "mid-stride walking", "sitting on the edge of a seat", 
-    "resting chin on hand"
+    "resting chin on hand",
+    "leaning in close to the camera", "resting face on hands", "looking up thoughtfully", "holding a warm cup near face", "peeking over sunglasses", "holding a vintage camera", "brushing hair behind ear", "wielding a glowing sword", "bowing gracefully", "striking a confident anime pose", "adjusting a royal crown",
+    "floating weightlessly", "bracing against a blizzard", "wiping sweat from forehead", "adjusting driving goggles", "casting a magical spell", "biting lip playfully", "screaming in battle", "smirking wickedly"
   ],
   cameraAngle: [
     "medium shot portrait", "close-up portrait", "85mm portrait lens", "smartphone selfie style", 
     "candid snapshot", "Vogue editorial angle", "35mm film photography", "eye level", "low angle cinematic", 
     "over-the-shoulder", "symmetrical framing", "Dutch angle", "bird's-eye view", "worm's-eye view", 
-    "extreme close-up", "50mm standard lens", "14mm wide-angle lens"
+    "extreme close-up", "50mm standard lens", "14mm wide-angle lens",
+    "tight waist-up shot", "intimate face close-up", "portrait mode blur", "selfie angle from above", "vlogger camera perspective", "macro photography on face", "100mm portrait lens"
   ],
   lighting: [
     "soft morning sunlight", "warm golden hour rim-light", "studio beauty lighting", "neon city bokeh", 
     "cool blue ambient light", "dramatic high contrast", "soft window side-lighting", "cinematic moody lighting", 
     "natural diffused light", "harsh flash photography", "lens flare", "dappled sunlight through trees", 
     "neon sign glow", "candlelight", "dim moody lighting", "harsh direct sunlight", "soft overcast lighting", 
-    "color gel lighting (red and blue)"
+    "color gel lighting (red and blue)",
+    "ring light glow", "soft cloudy daylight", "warm firelight", "golden hour backlighting with soft fill", "neon blue and pink side lighting", "sunlight filtering through blinds", "mystical glowing aura", "dramatic stage spotlighting",
+    "strobe lights", "flashing paparazzi cameras", "underwater light rays", "thick glowing fog", "harsh desert sun", "lightning flashes", "bioluminescent glow"
   ],
   style: [
     "Instagram lifestyle aesthetic", "photorealistic", "ultra realistic", "cinematic", "35mm film", 
     "disposable camera aesthetic", "anime", "illustration", "watercolor", "3D render", "fantasy art", 
     "vintage photo", "cyberpunk", "fashion editorial", "magazine cover", "polaroid",
     "minimalist aesthetic", "dark academia", "light academia", "cottagecore", "retro 70s vintage", 
-    "National Geographic style"
+    "National Geographic style",
+    "cinematic realism", "polaroid snapshot", "candid documentary style", "high fashion portrait", "Lofi aesthetic", "magazine cover photography", "Studio Ghibli style animation", "hyper-realistic fantasy illustration", "retro anime aesthetic", "CGI masterpiece",
+    "dark fantasy illustration", "gothic horror aesthetic", "synthwave neon", "sports photography", "vintage 1920s sepia", "comic book art style"
   ],
   era: [
     "modern day", "90s nostalgic", "80s retro", "futuristic", "medieval", "ancient history", "Victorian", 
-    "post-apocalyptic", "timeless", "mythology-inspired", "1920s classic", "Y2K era", "synthwave 80s", "Edwardian"
+    "post-apocalyptic", "timeless", "mythology-inspired", "1920s classic", "Y2K era", "synthwave 80s", "Edwardian",
+    "early 2000s Y2K", "retro 1950s diner", "victorian steampunk", "futuristic sci-fi", "1970s disco", "high fantasy medieval", "feudal Japan", "distant galactic future"
   ],
   props: [
     "coffee cup", "smartphone", "book", "laptop", "camera", "sunglasses", "headphones", "flower bouquet", 
     "guitar", "traditional oil lamp", "vintage car", "motorcycle", "sword", "shield",
     "vintage film camera", "steaming coffee mug", "wired headphones", "vinyl record", "canvas tote bag", 
-    "skateboard", "neon umbrella", "glass of wine"
+    "skateboard", "neon umbrella", "glass of wine",
+    "podcast microphone", "steaming teacup", "oversized headphones", "reading glasses", "polaroid picture", "vinyl record sleeve", "glowing magical staff", "ornate royal scepter", "katana", "steampunk goggles",
+    "Viking battle axe", "gladiatorial shield", "steaming test tube", "racing helmet", "snowboard", "ancient scroll", "glowing crystal ball", "cybernetic arm"
   ],
   colorPalette: [
     "warm earthy tones", "cool blue and silver", "neon cyberpunk colors", "soft pastel tones", "black and white", 
@@ -147,5 +165,10 @@ export const OPTION_DESCRIPTIONS: Record<string, string> = {
   "disposable camera aesthetic": "Nostalgic 90s party vibe, harsh flash, saturated colors",
   "National Geographic style": "Stunning, authentic, world-class travel documentary photography",
   "dark academia": "Moody, vintage scholarly aesthetic (tweed, old books, dark wood)",
-  "cottagecore": "Romanticized rural countryside aesthetic (nature, simplicity, flowy clothes)"
+  "cottagecore": "Romanticized rural countryside aesthetic (nature, simplicity, flowy clothes)",
+  "tight waist-up shot": "Forces the AI to focus mostly on the face and upper torso",
+  "ring light glow": "Creates a modern vlogger look with circular catchlights in the eyes",
+  "intimate face close-up": "Extreme close-up prioritizing facial expressions",
+  "Studio Ghibli style animation": "Beautiful, soft, hand-drawn anime aesthetic",
+  "hyper-realistic fantasy illustration": "Highly detailed, magical digital art style"
 };
