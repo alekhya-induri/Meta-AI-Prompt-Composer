@@ -3,7 +3,7 @@ import {
   Sparkles, Save, Copy, Download, RefreshCcw, Search, ChevronDown, ChevronRight, 
   Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson
 } from 'lucide-react';
-import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS } from './data';
+import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS, OPTION_DESCRIPTIONS } from './data';
 import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn } from './utils';
 
 // --- Types ---
@@ -40,6 +40,7 @@ export default function App() {
   // State: Accordion open state
   const [openCategories, setOpenCategories] = useState<Record<Category, boolean>>({
     identity: true,
+    details: false,
     outfit: false,
     setting: true, // Open a few by default
   } as Record<Category, boolean>);
@@ -272,13 +273,18 @@ export default function App() {
                                   key={option}
                                   onClick={() => handleToggleOption(cat, option)}
                                   className={cn(
-                                    "px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border",
+                                    "px-3 py-1.5 rounded-lg transition-all duration-200 border flex flex-col justify-center items-start text-left min-h-[36px]",
                                     isSelected 
                                       ? "bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20" 
                                       : "bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50"
                                   )}
                                 >
-                                  {option}
+                                  <span className="text-xs font-medium">{option}</span>
+                                  {OPTION_DESCRIPTIONS[option] && (
+                                    <span className={cn("text-[10px] leading-tight mt-0.5 max-w-[150px] whitespace-normal sm:max-w-xs", isSelected ? "text-blue-100" : "text-slate-400 font-normal")}>
+                                      {OPTION_DESCRIPTIONS[option]}
+                                    </span>
+                                  )}
                                 </button>
                               );
                             })}
