@@ -121,62 +121,94 @@ export function generateAnimationPrompt(selections: PromptSelections): string {
 }
 
 export function generateSocialCaption(selections: PromptSelections): string {
-  const captions: string[] = [];
-  const hashtags: Set<string> = new Set();
-  
-  const moodStr = (selections.mood || []).join(' ').toLowerCase();
-  const eraStr = (selections.era || []).join(' ').toLowerCase();
-  const settingStr = (selections.setting || []).join(' ').toLowerCase();
-  const styleStr = (selections.style || []).join(' ').toLowerCase();
-  const identityStr = (selections.identity || []).join(' ').toLowerCase();
-  
-  if (moodStr.includes('mysterious') || moodStr.includes('dramatic')) {
-     captions.push("Lost in the vibe 🌑✨");
-  } else if (moodStr.includes('playful') || moodStr.includes('joyful') || moodStr.includes('smile')) {
-     captions.push("Just bringing the good energy today ✨😊");
-  } else if (moodStr.includes('serious') || moodStr.includes('focused')) {
-     captions.push("Focused and locked in. ⚡");
-  } else if (moodStr.includes('dreamy') || moodStr.includes('ethereal')) {
-     captions.push("Living in a daydream ☁️✨");
-  } else if (eraStr.includes('90s') || eraStr.includes('y2k') || eraStr.includes('retro')) {
-     captions.push("Taking it back in time 📼 throwback vibes only.");
-  } else if (identityStr.includes('cyberpunk') || settingStr.includes('neon') || styleStr.includes('cyberpunk')) {
-     captions.push("Welcome to the future 🟩👾");
-  } else if (settingStr.includes('forest') || settingStr.includes('mountain') || settingStr.includes('nature')) {
-     captions.push("Out of office. In my element 🌲🍃");
-  } else if (styleStr.includes('cinematic') || styleStr.includes('film')) {
-     captions.push("Main character energy 🎬✨");
-  } else if (identityStr.includes('fashion') || styleStr.includes('vogue')) {
-     captions.push("Making every moment a runway 🖤🔥");
+  const identities = selections.identity || [];
+  const settings = selections.setting || [];
+  const moods = selections.mood || [];
+  const outfits = selections.outfit || [];
+  const styles = selections.style || [];
+  const lighting = selections.lighting || [];
+
+  // Helper to grab a clean joined string of array items
+  const joinList = (list: string[]) => {
+    if (list.length === 0) return "";
+    if (list.length === 1) return list[0].toLowerCase();
+    return list.slice(0, -1).join(", ").toLowerCase() + " and " + list[list.length - 1].toLowerCase();
+  };
+
+  let captionParts: string[] = [];
+
+  // 1. Hook (Identity + Mood)
+  if (identities.length > 0) {
+    const idStr = joinList(identities);
+    if (moods.length > 0) {
+      captionParts.push(`Feeling ${joinList(moods)} while channeling my inner ${idStr}. ✨`);
+    } else {
+      captionParts.push(`Embracing the ${idStr} aesthetic today. 💫`);
+    }
+  } else if (moods.length > 0) {
+    captionParts.push(`Currently living for these ${joinList(moods)} vibes. ✨`);
   } else {
-     captions.push("Loving this new look ✨ Let me know what you think!");
+    captionParts.push(`Loving this new look! ✨ What do you think?`);
   }
 
-  // Fallback caption
-  let finalCaption = captions[0];
-  if (!finalCaption) {
-    finalCaption = "Loving this new look ✨ Let me know what you think!";
+  // 2. Context (Outfit + Setting)
+  // Use "Outfit check:" instead of "wearing" to avoid grammar issues with missing "a" or "an"
+  if (outfits.length > 0) {
+    captionParts.push(`Outfit check: obsessing over this ${joinList(outfits)} look. 👗`);
+  }
+  if (settings.length > 0) {
+    captionParts.push(`Taking in the vibes from the ${joinList(settings)}.`);
   }
 
-  hashtags.add("#AIArt");
-  hashtags.add("#MetaAI");
+  // 3. Style / Lighting
+  // Note: We skip 'details' completely in the caption sentences because anatomical or 
+  // posing instructions (like "hands in pockets" or "athletic silhouette") sound very weird when spoken out loud.
+  if (lighting.length > 0) {
+    captionParts.push(`Caught in that perfect ${joinList(lighting)} lighting. 🔆`);
+  }
+  if (styles.length > 0) {
+    captionParts.push(`Love the ${joinList(styles)} aesthetic of this shot! 📸`);
+  }
+
+  // 4. CTA
+  if (captionParts.length > 1) { 
+    const ctas = [
+      "What do you guys think of this aesthetic? Drop a comment below! 👇",
+      "Rate this vibe from 1-10! 🎯",
+      "Which part of this look is your favorite? ✨"
+    ];
+    captionParts.push("\n" + ctas[Math.floor(Math.random() * ctas.length)]);
+  }
+
+  // 5. Build Hashtags: Instead of making entire 6-word phrases into one hashtag, 
+  // we break everything down into Individual Keywords.
+  const allWordsString = Object.values(selections).flat().join(" ");
+  const rawWords = allWordsString.split(/[\s-]+/);
   
-  if (styleStr.includes('cinematic')) hashtags.add("#CinematicPhotography");
-  if (moodStr.includes('dreamy')) hashtags.add("#EtherealAesthetic");
-  if (eraStr.includes('90s') || eraStr.includes('y2k')) hashtags.add("#RetroVibes");
-  if (settingStr.includes('forest') || settingStr.includes('mountain')) hashtags.add("#NatureVibes");
-  if (identityStr.includes('cyberpunk') || settingStr.includes('neon')) hashtags.add("#CyberpunkArt");
-  if (styleStr.includes('anime')) hashtags.add("#AnimeArt");
-  if (selections.lighting && selections.lighting.join(' ').toLowerCase().includes('golden hour')) hashtags.add("#GoldenHour");
-  if (selections.cameraAngle && selections.cameraAngle.join(' ').toLowerCase().includes('portrait')) hashtags.add("#PortraitPhotography");
+  // Words that make terrible hashtags
+  const stopWords = new Set([
+    "in", "a", "an", "the", "with", "and", "of", "to", "at", "on", "for", 
+    "looking", "directly", "viewer", "hands", "pockets", "well", "proportioned", 
+    "ultra", "medium", "shot", "wearing", "style", "silhouette"
+  ]);
   
-  if (selections.identity && selections.identity.length > 0) {
-      hashtags.add(`#${selections.identity[0].replace(/[\s-]/g, '')}`);
-  }
+  let validKeywords = rawWords
+    .map(w => w.replace(/[^a-zA-Z]/g, "")) // Keep only letters
+    .filter(w => w.length > 3 && !stopWords.has(w.toLowerCase())); // Strip short words & stop words
 
-  const hashtagStr = Array.from(hashtags).slice(0, 5).join(' ');
+  // Deduplicate our keyword pool
+  validKeywords = Array.from(new Set(validKeywords));
 
-  return `${finalCaption}\n\n${hashtagStr}`;
+  // Capitalize and format into hashtags, limit to 6 descriptive tags
+  let hashtags = validKeywords.slice(0, 6).map(w => "#" + w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+  
+  // Add standard baseline tags safely
+  hashtags.push("#MetaAI", "#ImagineMe");
+
+  const uniqueTags = Array.from(new Set(hashtags));
+  
+  const finalCaption = captionParts.join(" ") + "\n\n" + uniqueTags.join(" ");
+  return finalCaption.trim();
 }
 
 export interface ValidationWarning {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   Sparkles, Save, Copy, Download, RefreshCcw, Search, ChevronDown, ChevronRight, 
   Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video, MessageSquare, Image as ImageIcon
@@ -179,9 +179,9 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-purple-700 tracking-tight">
-                Meta AI Prompt Composer
+                Meta AI "Imagine Me" Vibe Generator
               </h1>
-              <p className="text-sm text-slate-500 font-medium">Optimize your "Imagine me" generations.</p>
+              <p className="text-sm text-slate-500 font-medium">Your complete pipeline for effortless prompts, animations, and captions.</p>
             </div>
           </div>
           
@@ -431,17 +431,17 @@ export default function App() {
                         <div className="bg-pink-100/50 px-4 py-2 border-b border-pink-100 flex justify-between items-center text-xs text-pink-600 font-medium tracking-wide uppercase">
                           <span>Social Media Copy & Hashtags</span>
                         </div>
-                        <div className="flex-1 p-4 bg-pink-50/20">
+                        <div className="flex-1 p-4 bg-pink-50/20 flex flex-col relative">
                           <textarea 
                             readOnly
                             value={socialCaptionText}
                             className="w-full h-full min-h-[140px] bg-transparent resize-none focus:outline-none text-slate-700 font-medium text-base sm:text-lg leading-relaxed custom-scrollbar"
                           />
                         </div>
-                        <div className="p-3 border-t border-pink-100 bg-white flex flex-wrap gap-2">
+                        <div className="p-3 border-t border-pink-100 bg-white flex flex-wrap gap-2 relative">
                           <button 
                             onClick={handleCopyCaption}
-                            className="flex-1 flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-pink-500/20 active:scale-95"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-pink-500/20 active:scale-95"
                           >
                             <Copy size={16} /> Copy Caption
                           </button>

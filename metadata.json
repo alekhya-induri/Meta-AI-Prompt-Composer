@@ -1,6 +1,6 @@
 {
-  "name": "Meta AI Prompt Composer",
-  "description": "A sophisticated prompt builder for generating optimized prompts for Meta AI's Imagine me feature, featuring live previews, combinations, and presets.",
+  "name": "Meta AI Imagine Me Vibe Generator",
+  "description": "A sophisticated generator pipeline for writing effortless optimization prompts, animations, and social captions for Meta AI's Imagine me feature.",
   "requestFramePermissions": [],
   "majorCapabilities": []
 }

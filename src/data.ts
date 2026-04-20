@@ -19,7 +19,8 @@ export const PROMPT_OPTIONS = {
     "subtle lip gloss", "messy bun", "braided hair", "slicked back hair", "well proportioned full-figured hourglass silhouette", 
     "tall stature", "chiseled jawline", "soft jawline",
     "joyful laugh lines", "piercing gaze", "gentle highlights in hair", "subtle blush", "expressive hand gestures near face", "wind-blown hair", "soft freckles", "intense eye contact", "radiant smile", "intricate face paint", "elf ears", "dramatic anime-style makeup", "glowing ethereal skin",
-    "glowing supernatural eyes", "vampire fangs", "war paint", "battle scars", "cybernetic facial implants", "intricate henna tattoos", "glittering aquatic scales on cheeks", "sweat-glistening skin", "smudged dirt on cheeks"
+    "glowing supernatural eyes", "vampire fangs", "war paint", "battle scars", "cybernetic facial implants", "intricate henna tattoos", "glittering aquatic scales on cheeks", "sweat-glistening skin", "smudged dirt on cheeks",
+    "well proportioned athletic hourglass silhouette", "slender and graceful statuesque frame", "strong muscular athletic build", "petite and delicate frame", "lean and lithe dancer's physique", "softly rounded classical figure", "strong and compact build", "tall and commanding presence", "lean runner's physique"
   ],
   outfit: [
     "casual minimalist clothes", "oversized linen shirt", "ribbed knit top and jeans", "smart casual blazer", 
