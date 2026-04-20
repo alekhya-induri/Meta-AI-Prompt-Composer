@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   Sparkles, Save, Copy, Download, RefreshCcw, Search, ChevronDown, ChevronRight, 
-  Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video, MessageSquare, Image as ImageIcon
+  Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video, MessageSquare, Image as ImageIcon, Github
 } from 'lucide-react';
 import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS, OPTION_DESCRIPTIONS } from './data';
 import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt, generateSocialCaption } from './utils';
@@ -186,7 +186,7 @@ export default function App() {
           </div>
           
           {/* Navigation Tabs */}
-          <nav className="flex flex-wrap gap-2">
+          <nav className="flex flex-wrap items-center gap-2">
             {[
               { id: 'build', label: 'Build Prompt', icon: <Settings2 size={16} /> },
               { id: 'presets', label: 'Presets', icon: <Save size={16} /> },
@@ -208,6 +208,25 @@ export default function App() {
                 <span className="hidden sm:inline">{tab.label}</span>
               </button>
             ))}
+            <div className="w-px h-6 bg-slate-300/60 mx-1 hidden sm:block"></div>
+            <a 
+              href="mailto:alekhyainduri6@gmail.com?subject=Feedback%20for%20Meta%20AI%20Imagine%20Me%20Vibe%20Generator"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 border bg-white/40 border-slate-200/50 text-slate-700 hover:bg-white hover:shadow-sm shadow-sm"
+              title="Send Feedback"
+            >
+              <MessageSquare size={16} className="text-blue-500" />
+              <span>Feedback</span>
+            </a>
+            <a 
+              href="https://github.com/alekhya-induri/Meta-AI-Prompt-Composer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 border bg-slate-900 border-transparent text-white hover:bg-slate-800 hover:shadow-md shadow-sm"
+              title="View Source on GitHub"
+            >
+              <Github size={16} />
+              <span>GitHub</span>
+            </a>
           </nav>
         </header>
 

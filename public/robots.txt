@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alekhya-induri.github.io/Meta-AI-Prompt-Composer/sitemap.xml
