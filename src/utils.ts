@@ -1,6 +1,43 @@
-import { Category, PROMPT_OPTIONS } from './data';
+import { Category, PROMPT_OPTIONS, GENDER_FEMALE_ONLY, GENDER_MALE_ONLY, VIBE_SETS } from './data';
 
 export type PromptSelections = Partial<Record<Category, string[]>>;
+
+export type GenderFilter = 'all' | 'male' | 'female';
+
+export function getFilteredOptions(category: Category, genderFilter: GenderFilter): string[] {
+  const options = PROMPT_OPTIONS[category] || [];
+  return options.filter(option => {
+    if (genderFilter === 'male' && GENDER_FEMALE_ONLY.includes(option)) return false;
+    if (genderFilter === 'female' && GENDER_MALE_ONLY.includes(option)) return false;
+    return true;
+  });
+}
+
+export function getRecommendedOptions(selections: PromptSelections): Set<string> {
+  const activeOptions = Object.values(selections).flat().filter(Boolean) as string[];
+  if (activeOptions.length === 0) return new Set();
+
+  const activeVibes = new Set<string>();
+  
+  // Find which vibes the current selections trigger
+  for (const option of activeOptions) {
+    for (const [vibeName, items] of Object.entries(VIBE_SETS)) {
+      if (items.includes(option)) {
+        activeVibes.add(vibeName);
+      }
+    }
+  }
+
+  // Collect all recommended items
+  const recommendations = new Set<string>();
+  for (const vibe of activeVibes) {
+    for (const item of VIBE_SETS[vibe]) {
+      recommendations.add(item);
+    }
+  }
+
+  return recommendations;
+}
 
 export function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(' ');
@@ -259,27 +296,43 @@ export function validatePrompt(selections: PromptSelections, promptText: string)
 
 // Random picker helper
 export function pickRandom<T>(array: T[], count: number = 1): T[] {
+  if (!array || array.length === 0) return [];
   const shuffled = [...array].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
-export function generateSurpriseMeSelections(): PromptSelections {
+export function generateSurpriseMeSelections(genderFilter: GenderFilter = 'all'): PromptSelections {
   const selections: PromptSelections = {};
   
-  // Always pick an identity
-  selections.identity = pickRandom(PROMPT_OPTIONS.identity);
+  // Pick a random Vibe Theme
+  const vibeNames = Object.keys(VIBE_SETS);
+  const chosenVibe = pickRandom(vibeNames)[0];
+  const vibeTerms = VIBE_SETS[chosenVibe];
+
+  // Helper to filter by Gender AND Vibe
+  const getVibeOptions = (category: Category) => {
+    const genderFiltered = getFilteredOptions(category, genderFilter);
+    const vibeFiltered = genderFiltered.filter(opt => vibeTerms.includes(opt));
+    
+    // If this specific vibe doesn't have terms for this category (e.g. no specific "cyberpunk" camera angle),
+    // we just fallback safely to the purely gender-filtered generic list
+    return vibeFiltered.length > 0 ? vibeFiltered : genderFiltered;
+  };
+  
+  // Always pick an identity strongly tied to the vibe
+  selections.identity = pickRandom(getVibeOptions('identity'));
   
   // 70% chance to pick setting
-  if (Math.random() > 0.3) selections.setting = pickRandom(PROMPT_OPTIONS.setting);
+  if (Math.random() > 0.3) selections.setting = pickRandom(getVibeOptions('setting'));
   
   // 50% chance for others to keep it organic
-  if (Math.random() > 0.5) selections.outfit = pickRandom(PROMPT_OPTIONS.outfit);
-  if (Math.random() > 0.5) selections.lighting = pickRandom(PROMPT_OPTIONS.lighting);
-  if (Math.random() > 0.5) selections.style = pickRandom(PROMPT_OPTIONS.style);
+  if (Math.random() > 0.5) selections.outfit = pickRandom(getVibeOptions('outfit'));
+  if (Math.random() > 0.5) selections.lighting = pickRandom(getVibeOptions('lighting'));
+  if (Math.random() > 0.5) selections.style = pickRandom(getVibeOptions('style'));
   
   // Add 1-2 random modifiers from remaining to sprinkle spice
-  if (Math.random() > 0.7) selections.mood = pickRandom(PROMPT_OPTIONS.mood);
-  if (Math.random() > 0.8) selections.cameraAngle = pickRandom(PROMPT_OPTIONS.cameraAngle);
+  if (Math.random() > 0.7) selections.mood = pickRandom(getVibeOptions('mood'));
+  if (Math.random() > 0.8) selections.cameraAngle = pickRandom(getVibeOptions('cameraAngle'));
 
   return selections;
 }

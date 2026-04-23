@@ -8,7 +8,8 @@ export const PROMPT_OPTIONS = {
     "software developer", "content creator", "yoga instructor", "freelancer", "vintage fashion enthusiast", 
     "cyberpunk street samurai", "boho traveler", "indie musician",
     "podcast host", "barista", "florist", "news anchor", "makeup artist", "vlogger", "DJ", "friendly librarian", "mountain climber", "botanist", "jazz singer", "tech CEO", "royal princess", "regal queen", "noble king", "handsome prince", "anime protagonist", "fantasy RPG cosplayer", "ethereal elf", "magical wizard",
-    "Greek god", "ancient Egyptian pharaoh", "majestic vampire", "ethereal mermaid", "mischievous fairy", "Viking raider", "Roman gladiator", "1920s flapper", "post-apocalyptic survivor", "Formula 1 driver", "professional snowboarder", "graceful ballerina", "cyborg android", "mad scientist"
+    "Greek god", "ancient Egyptian pharaoh", "majestic vampire", "ethereal mermaid", "mischievous fairy", "Viking raider", "Roman gladiator", "1920s flapper", "post-apocalyptic survivor", "Formula 1 driver", "professional snowboarder", "graceful ballerina", "cyborg android", "mad scientist",
+    "software engineer", "Indian college student", "wedding guest", "startup founder"
   ],
   details: [
     "natural glowing skin", "sharp facial features", "soft youthful features", "athletic toned physique", 
@@ -31,7 +32,8 @@ export const PROMPT_OPTIONS = {
     "baggy Y2K streetwear", "embroidered ethnic tunic", "minimalist monochrome outfit", "sequined party dress", 
     "vintage sports jersey", "tailored waistcoat", "denim jacket and white tee", "cozy oversized hoodie",
     "cashmere turtleneck", "flannel shirt", "denim overalls", "winter scarf and beanie", "leather aviator jacket", "silk bomber jacket", "heavy knitted cardigan", "ornate royal crown and robes", "jewel-encrusted tiara", "medieval knight armor", "elaborate anime cosplay outfit", "velvet Victorian gown", "tactical tech-wear vest",
-    "heavy fur-lined Viking cloak", "shining silver plate armor", "Roman gladiator chest plate", "1920s sequined dress", "weathered leather duster", "Formula 1 racing suit", "protective snow gear", "elegant ballet tutu", "post-apocalyptic scavenger gear", "tattered gothic robes"
+    "heavy fur-lined Viking cloak", "shining silver plate armor", "Roman gladiator chest plate", "1920s sequined dress", "weathered leather duster", "Formula 1 racing suit", "protective snow gear", "elegant ballet tutu", "post-apocalyptic scavenger gear", "tattered gothic robes",
+    "vibrant silk saree with gold embroidery", "pastel floral Anarkali suit", "royal Jodhpuri suit", "Nehru jacket over crisp shirt", "colorful Bandhani dupatta", "casual Kurti with jeans", "crisp formal cotton shirt", "vibrant festive lehenga"
   ],
   setting: [
     "sun-drenched minimalist apartment", "cozy dimly lit cafe", "bustling global city street", "neon-lit cyberpunk alley", 
@@ -42,7 +44,8 @@ export const PROMPT_OPTIONS = {
     "hidden speakeasy bar", "rooftop garden at dusk", "subway train carriage", "ancient ruins", "desert oasis", 
     "art gallery exhibition",
     "recording studio", "botanical garden path", "cozy reading nook", "neon-lit diner booth", "art studio filled with canvas", "sunlit kitchen", "record store aisle", "grand castle throne room", "enchanted fantasy forest", "cherry blossom courtyard", "neon Tokyo crosswalk", "royal ballroom",
-    "ancient Mount Olympus", "dark Gothic castle", "underwater coral reef", "Viking longship in a storm", "Roman Colosseum", "1920s speakeasy", "post-apocalyptic wasteland", "snowy mountain peak", "neon-lit underground racing track", "zero-gravity space station"
+    "ancient Mount Olympus", "dark Gothic castle", "underwater coral reef", "Viking longship in a storm", "Roman Colosseum", "1920s speakeasy", "post-apocalyptic wasteland", "snowy mountain peak", "neon-lit underground racing track", "zero-gravity space station",
+    "rooftop cafe adorned with fairy lights", "Mumbai marine drive at night", "vibrant Indian street market", "decorated wedding mandap", "modern tech startup office", "heritage Rajasthani palace courtyard", "cozy balcony with potted plants at dusk", "bustling night market"
   ],
   timeOfDay: [
     "dawn", "sunrise", "early morning", "morning", "noon", "golden hour", "late afternoon", 
@@ -78,7 +81,8 @@ export const PROMPT_OPTIONS = {
     "neon sign glow", "candlelight", "dim moody lighting", "harsh direct sunlight", "soft overcast lighting", 
     "color gel lighting (red and blue)",
     "ring light glow", "soft cloudy daylight", "warm firelight", "golden hour backlighting with soft fill", "neon blue and pink side lighting", "sunlight filtering through blinds", "mystical glowing aura", "dramatic stage spotlighting",
-    "strobe lights", "flashing paparazzi cameras", "underwater light rays", "thick glowing fog", "harsh desert sun", "lightning flashes", "bioluminescent glow"
+    "strobe lights", "flashing paparazzi cameras", "underwater light rays", "thick glowing fog", "harsh desert sun", "lightning flashes", "bioluminescent glow",
+    "warm glowing diya light", "colorful string lights bokeh", "monsoon overcast sky"
   ],
   style: [
     "Instagram lifestyle aesthetic", "photorealistic", "ultra realistic", "cinematic", "35mm film", 
@@ -172,4 +176,71 @@ export const OPTION_DESCRIPTIONS: Record<string, string> = {
   "intimate face close-up": "Extreme close-up prioritizing facial expressions",
   "Studio Ghibli style animation": "Beautiful, soft, hand-drawn anime aesthetic",
   "hyper-realistic fantasy illustration": "Highly detailed, magical digital art style"
+};
+
+// Gender specific term filters to improve logical combinations
+export const GENDER_FEMALE_ONLY = [
+  "traditional bride", "royal princess", "regal queen", "ethereal mermaid", "mischievous fairy", "1920s flapper", "graceful ballerina",
+  "elegant evening gown", "designer lehenga", "silk sari", "bohemian summer dress", "flowy summer sundress", "sequined party dress", 
+  "jewel-encrusted tiara", "velvet Victorian gown", "1920s sequined dress", "elegant ballet tutu", 
+  "well proportioned full-figured hourglass silhouette", "well proportioned athletic hourglass silhouette", 
+  "petite and delicate frame", "softly rounded classical figure", "ribbed knit top and jeans", "jazz singer",
+  "vibrant silk saree with gold embroidery", "pastel floral Anarkali suit", "colorful Bandhani dupatta", "casual Kurti with jeans", "vibrant festive lehenga"
+];
+
+export const GENDER_MALE_ONLY = [
+  "traditional groom", "cowboy", "noble king", "handsome prince", "Greek god", "ancient Egyptian pharaoh", "Roman gladiator",
+  "classic sherwani", "broad-shouldered build", "chiseled jawline", "strong and compact build", "tailored waistcoat",
+  "royal Jodhpuri suit", "Nehru jacket over crisp shirt"
+];
+
+export const VIBE_SETS: Record<string, string[]> = {
+  "cyberpunk": [
+    "cyberpunk protagonist", "cyberpunk street samurai", "cyborg android", 
+    "futuristic cyberpunk gear", "tactical tech-wear vest", "leather jacket and boots", 
+    "neon-lit cyberpunk alley", "futuristic metropolis", "neon Tokyo crosswalk", "neon-lit underground racing track", 
+    "neon city bokeh", "color gel lighting (red and blue)", "neon blue and pink side lighting",
+    "cybernetic facial implants", "cyberpunk", "synthwave neon", "futuristic", "distant galactic future",
+    "fierce and rebellious", "sunglasses"
+  ],
+  "fantasy": [
+    "fantasy adventurer", "royal princess", "regal queen", "noble king", "handsome prince", "ethereal elf", "magical wizard", "mischievous fairy", "Viking raider", "majestic vampire", "Greek god", "ancient Egyptian pharaoh", 
+    "ornate royal crown and robes", "jewel-encrusted tiara", "medieval knight armor", "heavy fur-lined Viking cloak", "luxurious velvet robe",
+    "enchanted fantasy forest", "grand castle throne room", "dark Gothic castle", "ancient Mount Olympus", 
+    "hyper-realistic fantasy illustration", "fantasy art", "dark fantasy illustration", "glowing ethereal skin", "elf ears", "glowing supernatural eyes", 
+    "high fantasy medieval", "mythology-inspired", "mystical glowing aura", "sword", "shield", "wielding a glowing sword", "casting a magical spell"
+  ],
+  "vintage": [
+    "vintage fashion enthusiast", "1920s flapper", "1920s speakeasy", "1920s sequined dress", "vintage 90s streetwear", "vintage sports jersey", "retro 1950s diner", "1970s disco", "80s retro",
+    "hidden speakeasy bar", "record store aisle", "35mm film photography", "disposable camera aesthetic", "polaroid", "vintage 1920s sepia", "vintage photo",
+    "nostalgic and warm", "vinyl record", "vintage film camera", "1920s classic", "90s nostalgic", "retro 70s vintage"
+  ],
+  "traditional": [
+    "traditional bride", "traditional groom", "desert nomad", "samurai", "wedding guest",
+    "traditional printed kurta", "designer lehenga", "classic sherwani", "silk sari", "embroidered ethnic tunic", 
+    "vibrant silk saree with gold embroidery", "pastel floral Anarkali suit", "royal Jodhpuri suit", "vibrant festive lehenga", "colorful Bandhani dupatta",
+    "traditional ancestral courtyard", "ancient ornate temple", "desert oasis", "decorated wedding mandap", "heritage Rajasthani palace courtyard",
+    "traditional ethnic jewelry", "intricate henna tattoos", "feudal Japan", "ancient history", "traditional oil lamp",
+    "warm glowing diya light"
+  ],
+  "modern_casual": [
+    "everyday person", "Gen Z influencer", "content creator", "vlogger", "podcast host", "Indian college student",
+    "casual minimalist clothes", "oversized linen shirt", "ribbed knit top and jeans", "baggy Y2K streetwear", "cozy oversized hoodie", "denim jacket and white tee", "casual Kurti with jeans",
+    "sun-drenched minimalist apartment", "cozy dimly lit cafe", "bustling global city street", "rooftop overlooking the city", "rooftop cafe adorned with fairy lights", "Mumbai marine drive at night", "vibrant Indian street market", "bustling night market", "cozy balcony with potted plants at dusk",
+    "ring light glow", "soft window side-lighting", "Instagram lifestyle aesthetic", "Lofi aesthetic", "colorful string lights bokeh",
+    "calm and relaxed", "smartphone selfie style", "vlogger camera perspective", "smartphone", "iced latte"
+  ],
+  "professional": [
+    "business professional", "CEO", "tech CEO", "entrepreneur", "doctor", "news anchor", "software developer", "software engineer", "startup founder",
+    "smart casual blazer", "tailored business suit", "tailored waistcoat", "crisp formal cotton shirt", "Nehru jacket over crisp shirt",
+    "modern office workspace", "high-rise apartment balcony", "luxury hotel lobby", "modern tech startup office",
+    "confident and powerful", "serious and focused", "sleek straight hair", "arms crossed", "laptop", "glasses with wire frames"
+  ],
+  "fitness": [
+    "fitness enthusiast", "athlete", "yoga instructor", "mountain climber", "professional snowboarder",
+    "sweat-glistening skin",
+    "activewear", "vintage sports jersey", "protective snow gear",
+    "scenic mountain viewpoint", "snowy mountain peak", 
+    "mid-action movement", "wiping sweat from forehead", "sports photography", "bracing against a blizzard"
+  ]
 };

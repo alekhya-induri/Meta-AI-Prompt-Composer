@@ -4,7 +4,7 @@ import {
   Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video, MessageSquare, Image as ImageIcon, Github
 } from 'lucide-react';
 import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS, OPTION_DESCRIPTIONS } from './data';
-import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt, generateSocialCaption } from './utils';
+import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt, generateSocialCaption, GenderFilter, getFilteredOptions, getRecommendedOptions } from './utils';
 
 // --- Types ---
 interface Preset {
@@ -29,6 +29,9 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('build');
   const [outputTab, setOutputTab] = useState<'image' | 'video' | 'caption'>('image');
   
+  // State: Filter
+  const [genderFilter, setGenderFilter] = useState<GenderFilter>('all');
+
   // State: Selections
   const [selections, setSelections] = useState<PromptSelections>({});
   
@@ -78,6 +81,7 @@ export default function App() {
   const animationPromptText = useMemo(() => generateAnimationPrompt(selections), [selections]);
   const socialCaptionText = useMemo(() => generateSocialCaption(selections), [selections]);
   const validationWarnings = useMemo(() => validatePrompt(selections, activePromptText), [selections, activePromptText]);
+  const recommendedOptions = useMemo(() => getRecommendedOptions(selections), [selections]);
 
   // Handlers
   const handleToggleOption = (category: Category, option: string) => {
@@ -248,6 +252,22 @@ export default function App() {
                     </button>
                   </div>
                   
+                  {/* Gender Filter Toggle */}
+                  <div className="flex bg-slate-100 p-1 rounded-lg">
+                    {(['all', 'male', 'female'] as const).map(type => (
+                      <button
+                        key={type}
+                        onClick={() => setGenderFilter(type)}
+                        className={cn(
+                          "flex-1 py-1 px-2 text-xs font-semibold rounded-md transition-all capitalize",
+                          genderFilter === type ? "bg-white shadow-sm text-blue-600" : "text-slate-500 hover:text-slate-700"
+                        )}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+
                   {/* Global Search */}
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
@@ -270,7 +290,7 @@ export default function App() {
 
                 <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
                   {categories.map((cat) => {
-                    const options = PROMPT_OPTIONS[cat];
+                    const options = getFilteredOptions(cat, genderFilter);
                     const filteredOptions = searchQuery 
                       ? options.filter(o => o.toLowerCase().includes(searchQuery.toLowerCase()))
                       : options;
@@ -301,6 +321,7 @@ export default function App() {
                           <div className="p-3 pt-0 flex flex-wrap gap-2 border-t border-slate-100/50 bg-white/30">
                             {filteredOptions.map(option => {
                               const isSelected = selections[cat]?.includes(option);
+                              const isRecommended = !isSelected && recommendedOptions.has(option);
                               return (
                                 <button
                                   key={option}
@@ -309,12 +330,17 @@ export default function App() {
                                     "px-3 py-1.5 rounded-lg transition-all duration-200 border flex flex-col justify-center items-start text-left min-h-[36px]",
                                     isSelected 
                                       ? "bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20" 
-                                      : "bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50"
+                                      : isRecommended
+                                        ? "bg-purple-50/50 text-indigo-700 border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50"
+                                        : "bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50"
                                   )}
                                 >
-                                  <span className="text-xs font-medium">{option}</span>
+                                  <div className="flex items-center gap-1.5 w-full">
+                                    {isRecommended && <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" title="Great match for your selected vibe!" />}
+                                    <span className="text-xs font-medium">{option}</span>
+                                  </div>
                                   {OPTION_DESCRIPTIONS[option] && (
-                                    <span className={cn("text-[10px] leading-tight mt-0.5 max-w-[150px] whitespace-normal sm:max-w-xs", isSelected ? "text-blue-100" : "text-slate-400 font-normal")}>
+                                    <span className={cn("text-[10px] leading-tight mt-0.5 max-w-[150px] whitespace-normal sm:max-w-xs", isSelected ? "text-blue-100" : isRecommended ? "text-indigo-400/80" : "text-slate-400 font-normal")}>
                                       {OPTION_DESCRIPTIONS[option]}
                                     </span>
                                   )}
