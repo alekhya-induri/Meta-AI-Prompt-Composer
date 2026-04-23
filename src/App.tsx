@@ -102,14 +102,14 @@ export default function App() {
   };
 
   const handleSurpriseMe = () => {
-    setSelections(generateSurpriseMeSelections());
+    setSelections(generateSurpriseMeSelections(genderFilter));
     setIsManualEdit(false);
   };
 
   const handleRandomizeAll = () => {
     const newSelections: PromptSelections = {};
     (Object.keys(PROMPT_OPTIONS) as Category[]).forEach(cat => {
-      newSelections[cat] = pickRandom(PROMPT_OPTIONS[cat], 1);
+      newSelections[cat] = pickRandom(getFilteredOptions(cat, genderFilter), 1);
     });
     setSelections(newSelections);
     setIsManualEdit(false);

@@ -1,110 +1,122 @@
-export const PROMPT_OPTIONS = {
+import { Category } from './utils';
+
+export const PROMPT_OPTIONS: Record<Category, string[]> = {
   identity: [
-    "everyday person", "fashion model", "Gen Z influencer", "fitness enthusiast", "business professional", 
-    "streetwear icon", "traditional bride", "traditional groom", "Bollywood star", "Hollywood actor", 
-    "cyberpunk protagonist", "fantasy adventurer", "astronaut", "cowboy", "superhero", "CEO", 
-    "doctor", "artist", "musician", "gamer", "traveler", "scientist", "detective", "chef", 
-    "pirate", "samurai", "pilot", "entrepreneur", "athlete", "photographer", "desert nomad",
-    "software developer", "content creator", "yoga instructor", "freelancer", "vintage fashion enthusiast", 
-    "cyberpunk street samurai", "boho traveler", "indie musician",
-    "podcast host", "barista", "florist", "news anchor", "makeup artist", "vlogger", "DJ", "friendly librarian", "mountain climber", "botanist", "jazz singer", "tech CEO", "royal princess", "regal queen", "noble king", "handsome prince", "anime protagonist", "fantasy RPG cosplayer", "ethereal elf", "magical wizard",
-    "Greek god", "ancient Egyptian pharaoh", "majestic vampire", "ethereal mermaid", "mischievous fairy", "Viking raider", "Roman gladiator", "1920s flapper", "post-apocalyptic survivor", "Formula 1 driver", "professional snowboarder", "graceful ballerina", "cyborg android", "mad scientist",
-    "software engineer", "Indian college student", "wedding guest", "startup founder"
+    "everyday person", "fashion model", "fitness enthusiast", "business professional", 
+    "streetwear icon", "traditional bride", "traditional groom", "Bollywood star", 
+    "cyberpunk protagonist", "astronaut", "CEO", "doctor", "artist", "musician", "gamer", 
+    "traveler", "scientist", "chef", "samurai", "athlete", "photographer",
+    "software engineer", "college student", "wedding guest", "startup founder", 
+    "classical dancer", "Sikh man", "tech worker", "street vendor", "fashion blogger",
+    // New genres added
+    "shonen hero", "elf warrior", "noble knight", "dragon rider", 
+    "space marine", "space explorer", "steampunk inventor", "spiritual pilgrim",
+    "desert nomad"
   ],
   details: [
-    "natural glowing skin", "sharp facial features", "soft youthful features", "athletic toned physique", 
-    "slender elegant frame", "broad-shouldered build", "traditional ethnic jewelry", "minimalist modern jewelry", 
-    "stylish glasses", "messy wavy hair", "sleek straight hair", "curly volume hair", "neatly styled hair", 
-    "expressive eyes", "subtle day makeup", "bold artistic makeup", "natural unedited look",
-    "freckles", "dimples", "thick expressive eyebrows", "glasses with wire frames", "bold winged eyeliner", 
-    "subtle lip gloss", "messy bun", "braided hair", "slicked back hair", "well proportioned full-figured hourglass silhouette", 
-    "tall stature", "chiseled jawline", "soft jawline",
-    "joyful laugh lines", "piercing gaze", "gentle highlights in hair", "subtle blush", "expressive hand gestures near face", "wind-blown hair", "soft freckles", "intense eye contact", "radiant smile", "intricate face paint", "elf ears", "dramatic anime-style makeup", "glowing ethereal skin",
-    "glowing supernatural eyes", "vampire fangs", "war paint", "battle scars", "cybernetic facial implants", "intricate henna tattoos", "glittering aquatic scales on cheeks", "sweat-glistening skin", "smudged dirt on cheeks",
-    "well proportioned athletic hourglass silhouette", "slender and graceful statuesque frame", "strong muscular athletic build", "petite and delicate frame", "lean and lithe dancer's physique", "softly rounded classical figure", "strong and compact build", "tall and commanding presence", "lean runner's physique"
+    "natural glowing skin", "sharp facial features", "athletic build", 
+    "slender frame", "broad-shouldered", "ethnic jewelry", "minimalist jewelry", 
+    "stylish glasses", "messy wavy hair", "expressive eyes", "subtle makeup", 
+    "freckles", "dimples", "thick eyebrows", "wire frame glasses", 
+    "chiseled jawline", "soft jawline",
+    "henna tattoos", "glowing ethereal skin", "bindi", "oxidized silver jewelry",
+    "glass bangles", "traditional nose ring", "neatly trimmed beard", "jasmine in hair",
+    "well proportioned athletic hourglass silhouette", "well proportioned full-figured hourglass silhouette",
+    "slender and graceful statuesque frame", "strong muscular athletic build", 
+    "petite and delicate frame", "softly rounded classical figure", "lean runner's physique",
+    // New details added
+    "cybernetic arm", "twin tails hairstyle", "translucent butterfly wings",
+    "pale complexion", "blood red lips", "silver hair", "long braided hair",
+    "clockwork heart implant"
   ],
   outfit: [
-    "casual minimalist clothes", "oversized linen shirt", "ribbed knit top and jeans", "smart casual blazer", 
+    "minimalist clothes", "oversized linen shirt", "ribbed knit top and jeans", "smart casual blazer", 
     "tailored business suit", "elegant evening gown", "traditional printed kurta", "designer lehenga", 
-    "classic sherwani", "silk sari", "vintage 90s streetwear", "chunky knit sweater", "activewear", 
-    "futuristic cyberpunk gear", "leather jacket and boots", "bohemian summer dress", "luxurious velvet robe", 
-    "beachwear", "winter coat", "chef uniform", "turtleneck and trench coat", "flowy summer sundress", 
-    "baggy Y2K streetwear", "embroidered ethnic tunic", "minimalist monochrome outfit", "sequined party dress", 
-    "vintage sports jersey", "tailored waistcoat", "denim jacket and white tee", "cozy oversized hoodie",
-    "cashmere turtleneck", "flannel shirt", "denim overalls", "winter scarf and beanie", "leather aviator jacket", "silk bomber jacket", "heavy knitted cardigan", "ornate royal crown and robes", "jewel-encrusted tiara", "medieval knight armor", "elaborate anime cosplay outfit", "velvet Victorian gown", "tactical tech-wear vest",
-    "heavy fur-lined Viking cloak", "shining silver plate armor", "Roman gladiator chest plate", "1920s sequined dress", "weathered leather duster", "Formula 1 racing suit", "protective snow gear", "elegant ballet tutu", "post-apocalyptic scavenger gear", "tattered gothic robes",
-    "vibrant silk saree with gold embroidery", "pastel floral Anarkali suit", "royal Jodhpuri suit", "Nehru jacket over crisp shirt", "colorful Bandhani dupatta", "casual Kurti with jeans", "crisp formal cotton shirt", "vibrant festive lehenga"
+    "classic sherwani", "silk sari", "vintage streetwear", "activewear", 
+    "cyberpunk gear", "leather jacket", "bohemian summer dress", "luxurious velvet robe", 
+    "modest resort wear", "winter coat", "baggy Y2K streetwear", "embroidered tunic", 
+    "monochrome outfit", "sequined dress", "vintage sports jersey", "denim jacket", 
+    "Banarasi silk sari", "pastel Anarkali suit", "casual Kurti with jeans", "royal Jodhpuri suit", 
+    "festive lehenga", "Nehru jacket", "dhoti kurta", "layered beachwear",
+    // New outfits added
+    "magical girl cosplay outfit", "gothic lolita dress", "tattered robes", "sheer nightgown",
+    "heavy knight armor", "chainmail hauberk", "queenly royal gown", "flight suit",
+    "spacesuit", "Victorian-era clothing", "leather apron", "simple monk's robe",
+    "flowing robe", "headscarf", "worn leather boots", "flamboyant sari"
   ],
   setting: [
-    "sun-drenched minimalist apartment", "cozy dimly lit cafe", "bustling global city street", "neon-lit cyberpunk alley", 
-    "traditional ancestral courtyard", "ancient ornate temple", "serene tropical resort", "rooftop overlooking the city", 
-    "lush green forest", "modern office workspace", "high-end fashion studio", "scenic mountain viewpoint", 
-    "futuristic metropolis", "train station platform", "luxury hotel lobby", "quiet library", "concert stage",
-    "minimalist Tokyo cafe", "rain-slicked city streets", "high-rise apartment balcony", "botanical greenhouse", 
-    "hidden speakeasy bar", "rooftop garden at dusk", "subway train carriage", "ancient ruins", "desert oasis", 
-    "art gallery exhibition",
-    "recording studio", "botanical garden path", "cozy reading nook", "neon-lit diner booth", "art studio filled with canvas", "sunlit kitchen", "record store aisle", "grand castle throne room", "enchanted fantasy forest", "cherry blossom courtyard", "neon Tokyo crosswalk", "royal ballroom",
-    "ancient Mount Olympus", "dark Gothic castle", "underwater coral reef", "Viking longship in a storm", "Roman Colosseum", "1920s speakeasy", "post-apocalyptic wasteland", "snowy mountain peak", "neon-lit underground racing track", "zero-gravity space station",
-    "rooftop cafe adorned with fairy lights", "Mumbai marine drive at night", "vibrant Indian street market", "decorated wedding mandap", "modern tech startup office", "heritage Rajasthani palace courtyard", "cozy balcony with potted plants at dusk", "bustling night market"
+    "minimalist apartment", "cozy dimly lit cafe", "bustling city street", "neon cyberpunk alley", 
+    "ancestral courtyard", "ancient ornate temple", "rooftop overlooking city", 
+    "lush green forest", "modern office workspace", "scenic mountain view", 
+    "futuristic metropolis", "luxury hotel lobby", "quiet library", "concert stage",
+    "rain-slicked streets", "botanical greenhouse", "hidden speakeasy bar", 
+    "desert oasis", "art gallery exhibition", "dark Gothic castle",
+    "Bangalore tech park", "Mumbai marine drive", "Jaipur palace courtyard", "Kerala backwaters",
+    "vibrant street market", "wedding mandap", "heritage stepwell", "local chai stall",
+    // New settings added
+    "cherry blossom garden", "floating island battlefield", "haunted mansion", "moonlit graveyard",
+    "enchanted forest", "ancient castle ruins", "spaceship interior", "exoplanet landscape",
+    "zero gravity environment", "airship over Victorian city", "serene mountain view", "zen garden",
+    "monastery courtyard", "desert sand dunes", "sun-baked earth"
   ],
   timeOfDay: [
-    "dawn", "sunrise", "early morning", "morning", "noon", "golden hour", "late afternoon", 
-    "sunset", "twilight", "evening", "night", "midnight", "blue hour", "midday sun", "deep night"
+    "dawn", "sunrise", "morning", "noon", "golden hour", "late afternoon", 
+    "sunset", "twilight", "evening", "night", "midnight", "blue hour"
   ],
   mood: [
-    "soft gentle smile", "confident and powerful", "calm and relaxed", "mysterious", "dramatic", 
-    "thoughtful", "dreamy", "playful", "serious", "elegant", "victorious", "intense", "romantic", "candid mid-laugh",
-    "intensely focused", "sleepy and cozy", "ethereal and distant", "confident smirk", "gentle loving gaze", 
-    "melancholy", "fierce and rebellious"
+    "serene", "joyful", "confident", "mysterious", "playful", 
+    "serious", "elegant", "victorious", "intense", "romantic", 
+    "focused", "sleepy", "melancholy", "fierce",
+    // New moods added
+    "macabre", "suspenseful", "inner peace", "intellectual pursuit"
   ],
   pose: [
-    "looking directly at the viewer", "looking over the shoulder", "candid looking away", "standing confidently", 
-    "sitting gracefully", "leaning against a wall", "walking towards camera", "mid-action movement", 
-    "arms crossed", "hands in pockets", "meditating", "posing dynamically",
-    "looking up at the camera", "looking down at the camera", "fixing hair", "adjusting glasses", 
-    "holding a coffee cup", "leaning back casually", "mid-stride walking", "sitting on the edge of a seat", 
-    "resting chin on hand",
-    "leaning in close to the camera", "resting face on hands", "looking up thoughtfully", "holding a warm cup near face", "peeking over sunglasses", "holding a vintage camera", "brushing hair behind ear", "wielding a glowing sword", "bowing gracefully", "striking a confident anime pose", "adjusting a royal crown",
-    "floating weightlessly", "bracing against a blizzard", "wiping sweat from forehead", "adjusting driving goggles", "casting a magical spell", "biting lip playfully", "screaming in battle", "smirking wickedly"
+    "looking at camera", "looking over shoulder", "candid looking away", "standing confidently", 
+    "sitting gracefully", "leaning against wall", "walking towards camera", "mid-action", 
+    "arms crossed", "meditating", "posing dynamically", "looking up", 
+    "holding a coffee cup", "leaning back", "sitting on the edge of a seat", 
+    "resting chin on hand", "adjusting glasses",
+    // New poses added
+    "dynamic pose"
   ],
   cameraAngle: [
-    "medium shot portrait", "close-up portrait", "85mm portrait lens", "smartphone selfie style", 
-    "candid snapshot", "Vogue editorial angle", "35mm film photography", "eye level", "low angle cinematic", 
-    "over-the-shoulder", "symmetrical framing", "Dutch angle", "bird's-eye view", "worm's-eye view", 
-    "extreme close-up", "50mm standard lens", "14mm wide-angle lens",
-    "tight waist-up shot", "intimate face close-up", "portrait mode blur", "selfie angle from above", "vlogger camera perspective", "macro photography on face", "100mm portrait lens"
+    "medium shot portrait", "close-up portrait", "85mm portrait lens", "smartphone selfie", 
+    "candid snapshot", "Vogue editorial angle", "35mm film", "low angle cinematic", 
+    "Dutch angle", "bird's-eye view", "extreme close-up", "50mm standard lens", "14mm wide-angle"
   ],
   lighting: [
     "soft morning sunlight", "warm golden hour rim-light", "studio beauty lighting", "neon city bokeh", 
-    "cool blue ambient light", "dramatic high contrast", "soft window side-lighting", "cinematic moody lighting", 
-    "natural diffused light", "harsh flash photography", "lens flare", "dappled sunlight through trees", 
-    "neon sign glow", "candlelight", "dim moody lighting", "harsh direct sunlight", "soft overcast lighting", 
-    "color gel lighting (red and blue)",
-    "ring light glow", "soft cloudy daylight", "warm firelight", "golden hour backlighting with soft fill", "neon blue and pink side lighting", "sunlight filtering through blinds", "mystical glowing aura", "dramatic stage spotlighting",
-    "strobe lights", "flashing paparazzi cameras", "underwater light rays", "thick glowing fog", "harsh desert sun", "lightning flashes", "bioluminescent glow",
-    "warm glowing diya light", "colorful string lights bokeh", "monsoon overcast sky"
+    "cool ambient light", "dramatic high contrast", "soft window side-lighting", "cinematic moody lighting", 
+    "natural diffused light", "harsh flash", "lens flare", "candlelight", 
+    "color gel lighting", "ring light glow", "warm diya light", "colorful string lights bokeh",
+    // New lightings added
+    "candlelit room", "glitching holographic light", "gas lamp light", "soft dappled sunlight",
+    "bioluminescent glow"
   ],
   style: [
-    "Instagram lifestyle aesthetic", "photorealistic", "ultra realistic", "cinematic", "35mm film", 
-    "disposable camera aesthetic", "anime", "illustration", "watercolor", "3D render", "fantasy art", 
-    "vintage photo", "cyberpunk", "fashion editorial", "magazine cover", "polaroid",
-    "minimalist aesthetic", "dark academia", "light academia", "cottagecore", "retro 70s vintage", 
-    "National Geographic style",
-    "cinematic realism", "polaroid snapshot", "candid documentary style", "high fashion portrait", "Lofi aesthetic", "magazine cover photography", "Studio Ghibli style animation", "hyper-realistic fantasy illustration", "retro anime aesthetic", "CGI masterpiece",
-    "dark fantasy illustration", "gothic horror aesthetic", "synthwave neon", "sports photography", "vintage 1920s sepia", "comic book art style"
+    "photorealistic", "ultra realistic", "cinematic", "35mm film", "disposable camera", 
+    "anime", "illustration", "watercolor", "3D render", "cyberpunk", 
+    "fashion editorial", "polaroid", "minimalist aesthetic", "dark academia", "Studio Ghibli style", 
+    "retro 70s vintage", "Madhubani folk art", "Indian miniature painting",
+    // New styles added
+    "kawaii anime style", "gothic horror aesthetic", "retro sci-fi style", "atomic age design"
   ],
   era: [
     "modern day", "90s nostalgic", "80s retro", "futuristic", "medieval", "ancient history", "Victorian", 
-    "post-apocalyptic", "timeless", "mythology-inspired", "1920s classic", "Y2K era", "synthwave 80s", "Edwardian",
-    "early 2000s Y2K", "retro 1950s diner", "victorian steampunk", "futuristic sci-fi", "1970s disco", "high fantasy medieval", "feudal Japan", "distant galactic future"
+    "post-apocalyptic", "timeless", "1920s classic", "Y2K era", "synthwave 80s", "Raj-era colonial", "Mughal era"
   ],
   props: [
     "coffee cup", "smartphone", "book", "laptop", "camera", "sunglasses", "headphones", "flower bouquet", 
     "guitar", "traditional oil lamp", "vintage car", "motorcycle", "sword", "shield",
-    "vintage film camera", "steaming coffee mug", "wired headphones", "vinyl record", "canvas tote bag", 
-    "skateboard", "neon umbrella", "glass of wine",
-    "podcast microphone", "steaming teacup", "oversized headphones", "reading glasses", "polaroid picture", "vinyl record sleeve", "glowing magical staff", "ornate royal scepter", "katana", "steampunk goggles",
-    "Viking battle axe", "gladiatorial shield", "steaming test tube", "racing helmet", "snowboard", "ancient scroll", "glowing crystal ball", "cybernetic arm"
+    "steaming cutting chai", "puja thali", "clay diyas", "vinyl record",
+    // New props added
+    "holographic screens", "mecha suit", "ancient scroll", "vintage film camera",
+    "ghostly figure", "spiderweb-draped chandelier", "colorful umbrella",
+    "magic runes", "glowing magical staff", "sci-fi helmet", "warp drive", "cosmic nebula",
+    "steampunk goggles", "intricate brass gadgets", "pocket watch", "steampunk gears texture",
+    "prayer beads", "walking stick", "lotus flower", "incense smoke",
+    "vintage television", "sputnik satellite", "mid-century modern furniture", "googie architecture",
+    "jetpack", "plastic and chrome materials", "water skin", "dramatic jewellery"
   ],
   colorPalette: [
     "warm earthy tones", "cool blue and silver", "neon cyberpunk colors", "soft pastel tones", "black and white", 
@@ -127,11 +139,7 @@ export const EXAMPLE_PROMPTS = [
   "Imagine me as a cyberpunk protagonist, looking over the shoulder, 85mm portrait lens. Sleek straight hair and minimalist modern jewelry, wearing futuristic cyberpunk gear and a leather jacket. In a neon-lit cyberpunk alley at night, neon city bokeh, cinematic moody lighting, ultra realistic."
 ];
 
-export type Category = keyof typeof PROMPT_OPTIONS;
-
-// Export human readable labels
 export const CATEGORY_LABELS: Record<Category, string> = {
-  identity: "Identity / Role",
   details: "Physical Features / Details",
   outfit: "Appearance / Outfit",
   setting: "Setting / Background",
@@ -151,7 +159,7 @@ export const OPTION_DESCRIPTIONS: Record<string, string> = {
   "85mm portrait lens": "Flattering for faces, softly blurs the background",
   "50mm standard lens": "Similar to the human eye, feels natural and balanced",
   "14mm wide-angle lens": "Captures a huge area, dynamic but stretches edges",
-  "35mm film photography": "Vintage, cinematic look with subtle film grain",
+  "35mm film": "Vintage, cinematic look with subtle film grain",
   "Vogue editorial angle": "High-fashion, dramatic, and stylized framing",
   "medium shot portrait": "Shows subject from waist up, balances face and outfit",
   "close-up portrait": "Focuses tightly on the face and expressions",
@@ -166,81 +174,123 @@ export const OPTION_DESCRIPTIONS: Record<string, string> = {
   "golden hour": "The warm, golden lighting just after sunrise or before sunset",
   "volumetric fog": "Visible 3D light beams cutting through fog or mist",
   "soft focus background": "Keeps the subject sharp while deliberately blurring the setting",
-  "color gel lighting (red and blue)": "Studio lighting using colored filters on the lamps",
-  "disposable camera aesthetic": "Nostalgic 90s party vibe, harsh flash, saturated colors",
-  "National Geographic style": "Stunning, authentic, world-class travel documentary photography",
-  "dark academia": "Moody, vintage scholarly aesthetic (tweed, old books, dark wood)",
-  "cottagecore": "Romanticized rural countryside aesthetic (nature, simplicity, flowy clothes)",
-  "tight waist-up shot": "Forces the AI to focus mostly on the face and upper torso",
-  "ring light glow": "Creates a modern vlogger look with circular catchlights in the eyes",
-  "intimate face close-up": "Extreme close-up prioritizing facial expressions",
-  "Studio Ghibli style animation": "Beautiful, soft, hand-drawn anime aesthetic",
-  "hyper-realistic fantasy illustration": "Highly detailed, magical digital art style"
+  "color gel lighting": "Studio lighting using colored filters on the lamps",
+  "disposable camera": "Nostalgic 90s party vibe, harsh flash, saturated colors"
 };
 
-// Gender specific term filters to improve logical combinations
 export const GENDER_FEMALE_ONLY = [
-  "traditional bride", "royal princess", "regal queen", "ethereal mermaid", "mischievous fairy", "1920s flapper", "graceful ballerina",
-  "elegant evening gown", "designer lehenga", "silk sari", "bohemian summer dress", "flowy summer sundress", "sequined party dress", 
-  "jewel-encrusted tiara", "velvet Victorian gown", "1920s sequined dress", "elegant ballet tutu", 
-  "well proportioned full-figured hourglass silhouette", "well proportioned athletic hourglass silhouette", 
-  "petite and delicate frame", "softly rounded classical figure", "ribbed knit top and jeans", "jazz singer",
-  "vibrant silk saree with gold embroidery", "pastel floral Anarkali suit", "colorful Bandhani dupatta", "casual Kurti with jeans", "vibrant festive lehenga"
+  "traditional bride", "elegant evening gown", "designer lehenga", "silk sari", 
+  "bohemian summer dress", "sequined dress", "Banarasi silk sari", "pastel Anarkali suit", 
+  "casual Kurti with jeans", "festive lehenga", "glass bangles", "traditional nose ring", 
+  "jasmine in hair", "bindi", "well proportioned athletic hourglass silhouette", 
+  "well proportioned full-figured hourglass silhouette", "slender and graceful statuesque frame", 
+  "petite and delicate frame", "softly rounded classical figure",
+  "magical girl cosplay outfit", "gothic lolita dress", "sheer nightgown", "queenly royal gown",
+  "flamboyant sari"
 ];
 
 export const GENDER_MALE_ONLY = [
-  "traditional groom", "cowboy", "noble king", "handsome prince", "Greek god", "ancient Egyptian pharaoh", "Roman gladiator",
-  "classic sherwani", "broad-shouldered build", "chiseled jawline", "strong and compact build", "tailored waistcoat",
-  "royal Jodhpuri suit", "Nehru jacket over crisp shirt"
+  "traditional groom", "classic sherwani", "broad-shouldered", "chiseled jawline", 
+  "royal Jodhpuri suit", "Nehru jacket", "dhoti kurta", "Sikh man", 
+  "neatly trimmed beard"
 ];
 
 export const VIBE_SETS: Record<string, string[]> = {
   "cyberpunk": [
-    "cyberpunk protagonist", "cyberpunk street samurai", "cyborg android", 
-    "futuristic cyberpunk gear", "tactical tech-wear vest", "leather jacket and boots", 
-    "neon-lit cyberpunk alley", "futuristic metropolis", "neon Tokyo crosswalk", "neon-lit underground racing track", 
-    "neon city bokeh", "color gel lighting (red and blue)", "neon blue and pink side lighting",
-    "cybernetic facial implants", "cyberpunk", "synthwave neon", "futuristic", "distant galactic future",
-    "fierce and rebellious", "sunglasses"
+    "cyberpunk protagonist", "cyberpunk gear", "leather jacket", 
+    "neon cyberpunk alley", "futuristic metropolis", 
+    "neon city bokeh", "color gel lighting", 
+    "cyberpunk", "synthwave 80s", "futuristic", 
+    "fierce", "sunglasses", "neon cyberpunk colors",
+    "cybernetic arm", "holographic screens", "mecha suit"
   ],
-  "fantasy": [
-    "fantasy adventurer", "royal princess", "regal queen", "noble king", "handsome prince", "ethereal elf", "magical wizard", "mischievous fairy", "Viking raider", "majestic vampire", "Greek god", "ancient Egyptian pharaoh", 
-    "ornate royal crown and robes", "jewel-encrusted tiara", "medieval knight armor", "heavy fur-lined Viking cloak", "luxurious velvet robe",
-    "enchanted fantasy forest", "grand castle throne room", "dark Gothic castle", "ancient Mount Olympus", 
-    "hyper-realistic fantasy illustration", "fantasy art", "dark fantasy illustration", "glowing ethereal skin", "elf ears", "glowing supernatural eyes", 
-    "high fantasy medieval", "mythology-inspired", "mystical glowing aura", "sword", "shield", "wielding a glowing sword", "casting a magical spell"
+  "anime_cosplay": [
+    "kawaii anime style", "shonen hero", "magical girl cosplay outfit",
+    "cell shading", "gothic lolita dress", "Studio Ghibli style",
+    "cherry blossom garden", "floating island battlefield",
+    "twin tails hairstyle", "translucent butterfly wings", 
+    "pastel pink and blue", "dynamic pose"
   ],
-  "vintage": [
-    "vintage fashion enthusiast", "1920s flapper", "1920s speakeasy", "1920s sequined dress", "vintage 90s streetwear", "vintage sports jersey", "retro 1950s diner", "1970s disco", "80s retro",
-    "hidden speakeasy bar", "record store aisle", "35mm film photography", "disposable camera aesthetic", "polaroid", "vintage 1920s sepia", "vintage photo",
-    "nostalgic and warm", "vinyl record", "vintage film camera", "1920s classic", "90s nostalgic", "retro 70s vintage"
+  "dark_academia": [
+    "quiet library", "dark Gothic castle", "art gallery exhibition",
+    "vintage streetwear", "oversized linen shirt", 
+    "dark academia", "candlelight", "book", "reading glasses", "melancholy",
+    "moody dark tones", "ancient scroll", "vintage film camera",
+    "intellectual pursuit", "ink-stained fingers"
   ],
-  "traditional": [
-    "traditional bride", "traditional groom", "desert nomad", "samurai", "wedding guest",
-    "traditional printed kurta", "designer lehenga", "classic sherwani", "silk sari", "embroidered ethnic tunic", 
-    "vibrant silk saree with gold embroidery", "pastel floral Anarkali suit", "royal Jodhpuri suit", "vibrant festive lehenga", "colorful Bandhani dupatta",
-    "traditional ancestral courtyard", "ancient ornate temple", "desert oasis", "decorated wedding mandap", "heritage Rajasthani palace courtyard",
-    "traditional ethnic jewelry", "intricate henna tattoos", "feudal Japan", "ancient history", "traditional oil lamp",
-    "warm glowing diya light"
+  "gothic_horror": [
+    "haunted mansion", "moonlit graveyard", "dark Gothic castle",
+    "pale complexion", "blood red lips", "tattered robes", "sheer nightgown",
+    "gothic horror aesthetic", "macabre", "suspenseful",
+    "ghostly figure", "spiderweb-draped chandelier", "candlelit room"
   ],
-  "modern_casual": [
-    "everyday person", "Gen Z influencer", "content creator", "vlogger", "podcast host", "Indian college student",
-    "casual minimalist clothes", "oversized linen shirt", "ribbed knit top and jeans", "baggy Y2K streetwear", "cozy oversized hoodie", "denim jacket and white tee", "casual Kurti with jeans",
-    "sun-drenched minimalist apartment", "cozy dimly lit cafe", "bustling global city street", "rooftop overlooking the city", "rooftop cafe adorned with fairy lights", "Mumbai marine drive at night", "vibrant Indian street market", "bustling night market", "cozy balcony with potted plants at dusk",
-    "ring light glow", "soft window side-lighting", "Instagram lifestyle aesthetic", "Lofi aesthetic", "colorful string lights bokeh",
-    "calm and relaxed", "smartphone selfie style", "vlogger camera perspective", "smartphone", "iced latte"
+  "monsoon_romance": [
+    "rain-slicked streets", "Mumbai marine drive", "Kerala backwaters",
+    "soft window side-lighting", "cinematic moody lighting",
+    "romantic", "melancholy", "colorful string lights bokeh",
+    "colorful umbrella", "steaming cutting chai"
+  ],
+  "traditional_indian": [
+    "traditional bride", "traditional groom", "classical dancer", "wedding guest",
+    "traditional printed kurta", "designer lehenga", "classic sherwani", "silk sari", 
+    "Banarasi silk sari", "pastel Anarkali suit", "royal Jodhpuri suit", "festive lehenga", "dhoti kurta",
+    "ancestral courtyard", "ancient ornate temple", "Jaipur palace courtyard", "wedding mandap", "heritage stepwell",
+    "ethnic jewelry", "henna tattoos", "bindi", "oxidized silver jewelry", "glass bangles",
+    "warm diya light", "puja thali", "clay diyas", "Madhubani folk art", "Indian miniature painting"
+  ],
+  "modern_urban": [
+    "everyday person", "Gen Z influencer", "college student", "fashion blogger",
+    "minimalist clothes", "ribbed knit top and jeans", "baggy Y2K streetwear", "denim jacket", "casual Kurti with jeans",
+    "minimalist apartment", "cozy dimly lit cafe", "bustling city street", "rooftop overlooking city", "Bangalore tech park", "Mumbai marine drive",
+    "ring light glow", "soft window side-lighting", "colorful string lights bokeh",
+    "smartphone selfie", "smartphone"
   ],
   "professional": [
-    "business professional", "CEO", "tech CEO", "entrepreneur", "doctor", "news anchor", "software developer", "software engineer", "startup founder",
-    "smart casual blazer", "tailored business suit", "tailored waistcoat", "crisp formal cotton shirt", "Nehru jacket over crisp shirt",
-    "modern office workspace", "high-rise apartment balcony", "luxury hotel lobby", "modern tech startup office",
-    "confident and powerful", "serious and focused", "sleek straight hair", "arms crossed", "laptop", "glasses with wire frames"
+    "business professional", "CEO", "doctor", "software engineer", "startup founder", "tech worker",
+    "smart casual blazer", "tailored business suit", "Nehru jacket", 
+    "modern office workspace", "luxury hotel lobby", "Bangalore tech park", 
+    "confident", "serious", "focused", "laptop", "wire frame glasses"
   ],
-  "fitness": [
-    "fitness enthusiast", "athlete", "yoga instructor", "mountain climber", "professional snowboarder",
-    "sweat-glistening skin",
-    "activewear", "vintage sports jersey", "protective snow gear",
-    "scenic mountain viewpoint", "snowy mountain peak", 
-    "mid-action movement", "wiping sweat from forehead", "sports photography", "bracing against a blizzard"
+  "high_fantasy": [
+    "fantasy adventurer", "elf warrior", "noble knight", "dragon rider",
+    "heavy knight armor", "chainmail hauberk", "queenly royal gown",
+    "enchanted forest", "ancient castle ruins", "magic runes",
+    "glowing magical staff", "silver hair", "long braided hair",
+    "epic tale", "mythical creature companion", "bioluminescent glow"
+  ],
+  "space_explorer": [
+    "space marine", "space explorer", "flight suit", "spacesuit",
+    "spaceship interior", "exoplanet landscape", "zero gravity environment",
+    "sci-fi helmet", "futuristic", "warp drive", "cosmic nebula",
+    "glitching holographic light", "cool blue and silver"
+  ],
+  "steampunk_inventor": [
+    "steampunk inventor", "steampunk goggles", "intricate brass gadgets",
+    "Victorian-era clothing", "leather apron", "pocket watch",
+    "airship over Victorian city", "steampunk gears texture",
+    "gas lamp light", "clockwork heart implant"
+  ],
+  "spiritual_pilgrim": [
+    "spiritual pilgrim", "simple monk's robe", "prayer beads", "walking stick",
+    "serene mountain view", "zen garden", "monastery courtyard",
+    "lotus flower", "incense smoke", "meditating", "inner peace",
+    "soft dappled sunlight", "morning mist"
+  ],
+  "retro_futurism": [
+    "retro sci-fi style", "vintage television", "sputnik satellite",
+    "mid-century modern furniture", "googie architecture", "jetpack",
+    "atomic age design", "plastic and chrome materials"
+  ],
+  "desert_nomad": [
+    "desert nomad", "flowing robe", "headscarf", "worn leather boots",
+    "desert sand dunes", "sun-baked earth", "nomadic lifestyle",
+    "camel driver", "water skin", "starlit night sky", "sandstorm"
+  ],
+  "bollywood_glamour": [
+    "Bollywood star", "elegant evening gown", "designer lehenga", 
+    "concert stage", "luxury hotel lobby", 
+    "studio beauty lighting", "dramatic high contrast",
+    "cinematic", "joyful", "romantic", "vibrant primary colors",
+    "flamboyant sari", "dramatic jewellery", "theatrical aesthetic"
   ]
 };

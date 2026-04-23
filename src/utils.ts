@@ -63,20 +63,12 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
     }
   }
 
-  // Details / Features
-  const details = selections.details?.join(', ');
-  if (details) parts.push(details);
-
   // Outfit
-  const outfit = selections.outfit?.join(' and ');
+  const outfit = selections.outfit?.join(', ');
   if (outfit) parts.push(`wearing ${outfit}`);
 
-  // Base Action / Pose
-  const pose = selections.pose?.join(' and ');
-  if (pose) parts.push(pose);
-
   // Setting / Context
-  const setting = selections.setting?.join(' and ');
+  const setting = selections.setting?.join(', ');
   const timeOfDay = selections.timeOfDay?.[0];
   if (setting) {
     if (timeOfDay) {
@@ -88,9 +80,17 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
     parts.push(`at ${timeOfDay}`);
   }
 
+  // Details / Features / Action
+  const details = selections.details?.join(', ');
+  if (details) parts.push(`with ${details}`);
+
+  // Base Action / Pose
+  const pose = selections.pose?.join(', ');
+  if (pose) parts.push(pose);
+
   // Props
-  const props = selections.props?.join(' and ');
-  if (props) parts.push(`with a ${props}`);
+  const props = selections.props?.join(', ');
+  if (props) parts.push(`with ${props}`);
 
   // Collect the rest of the descriptive modifiers
   const modifiers: string[] = [];
@@ -103,7 +103,7 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
   if (selections.quality?.length) modifiers.push(...selections.quality);
 
   if (modifiers.length > 0) {
-      return parts.join(', ') + ', ' + modifiers.join(', ') + '.';
+      return parts.join(', ') + '. ' + modifiers.join(', ') + '.';
   }
 
   return parts.join(', ') + (parts.length > 0 ? '.' : '');
