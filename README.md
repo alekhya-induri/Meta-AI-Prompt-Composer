@@ -9,10 +9,13 @@ Easily generate perfectly structured image prompts, animation guide prompts, and
 
 ## ✨ Features
 
-- **Visual Prompt Building:** Select from dozens of curated identities, moods, outfits, settings, lighting, and camera angles. No more starting at a blank text box.
-- **Live Preview:** See your exact prompt construct itself in real-time as you mix and match attributes.
-- **Smart Captions:** Automatically generates highly relevant Instagram/social media captions and hashtags based on the exact keywords you selected.
-- **Animation Prompts:** Creates secondary prompts specifically optimized for animating your AI-generated images.
+- **The Vibe Engine:** Instantly apply 15 perfectly curated aesthetic presets—ranging from *Bollywood Glamour* and *Monsoon Romance* to *Cyberpunk*, *Dark Academia*, and *High Fantasy*.
+- **Extensive Culturally-Aware Dataset:** Select from hundreds of deeply researched, multi-genre tags blending rich Traditional/Modern Indian aesthetics with vast global, sci-fi, and anime terminologies.
+- **Meta AI Safety Protocols:** Thoughtfully constructed vocabulary that safely bypasses over-sensitive AI filters. Achieve stunning results using classical anatomical modifiers (e.g., *"well proportioned full-figured hourglass silhouette"*) without triggering NSFW blocks.
+- **Intelligent Gender Filtering:** Seamlessly switch between Male, Female, and Unisex constraints to ensure logically sound, accurate outfit and identity selections.
+- **Visual Prompt Building:** Mix and match dozens of identities, moods, outfits, settings, lighting, and camera angles. No more staring at a blank text box.
+- **Live Preview:** See your exact prompt construct itself in real-time as you tweak individual attributes.
+- **Smart Captions & Animation Guides:** Automatically generates highly relevant social media captions, hashtags, and secondary animation-centric prompts based on your exact keywords.
 - **Presets & History:** Save your favorite prompt combinations locally, and view a continuous history log of your 50 most recently copied prompts.
 - **Export Options:** Export your prompts safely to `.txt` or `.json` formats.
 - **Mobile Optimized:** A sleek, fully responsive interface that works flawlessly on your phone.
