@@ -120,38 +120,46 @@ export function generateAnimationPrompt(selections: PromptSelections): string {
   const identityStr = (selections.identity || []).join(' ').toLowerCase();
 
   // Settings/Environment
-  if (settingStr.includes('rain') || settingStr.includes('storm') || settingStr.includes('slicked')) motions.push("Rain falling in the background.");
-  if (settingStr.includes('neon') || settingStr.includes('cyberpunk') || settingStr.includes('tokyo crosswalk')) motions.push("Neon lights flickering gently.");
-  if (settingStr.includes('forest') || settingStr.includes('garden') || settingStr.includes('tree') || settingStr.includes('jungle')) motions.push("Leaves rustling softly in the background.");
-  if (settingStr.includes('ocean') || settingStr.includes('beach') || settingStr.includes('water') || settingStr.includes('reef')) motions.push("Water shimmering and rippling softly.");
-  if (settingStr.includes('snow') || settingStr.includes('blizzard')) motions.push("Snowflakes drifting softly through the air.");
-  if (settingStr.includes('fire') || settingStr.includes('candle') || lightingStr.includes('fire')) motions.push("Flames flickering softly casting dynamic shadows.");
-  if (settingStr.includes('space') || settingStr.includes('galaxy') || settingStr.includes('stars')) motions.push("Stars twinkling slowly in the distant background.");
+  if (settingStr.includes('rain') || settingStr.includes('storm') || settingStr.includes('slicked') || settingStr.includes('monsoon')) motions.push("Rain falling in the background.");
+  if (settingStr.includes('neon') || settingStr.includes('cyberpunk') || settingStr.includes('tokyo') || settingStr.includes('cityscape')) motions.push("Neon lights flickering gently, subtle city movement.");
+  if (settingStr.includes('forest') || settingStr.includes('garden') || settingStr.includes('tree') || settingStr.includes('jungle') || settingStr.includes('nature')) motions.push("Leaves rustling softly in the background.");
+  if (settingStr.includes('ocean') || settingStr.includes('beach') || settingStr.includes('water') || settingStr.includes('reef') || settingStr.includes('river')) motions.push("Water shimmering and rippling softly.");
+  if (settingStr.includes('snow') || settingStr.includes('blizzard') || settingStr.includes('winter')) motions.push("Snowflakes drifting softly through the air.");
+  if (settingStr.includes('fire') || settingStr.includes('candle') || lightingStr.includes('fire') || settingStr.includes('torch')) motions.push("Flames flickering softly casting dynamic shadows.");
+  if (settingStr.includes('space') || settingStr.includes('galaxy') || settingStr.includes('stars') || settingStr.includes('nebula') || settingStr.includes('planet')) motions.push("Stars twinkling slowly in the distant background, cosmic particles drifting.");
+  if (settingStr.includes('cafe') || settingStr.includes('restaurant') || settingStr.includes('market')) motions.push("Subtle background activity and ambient movement.");
+  if (settingStr.includes('graveyard') || settingStr.includes('mansion') || settingStr.includes('gothic') || settingStr.includes('spooky')) motions.push("Eerie shadows shifting, subtle fog rolling.");
   
   // Props
-  if (propsStr.includes('coffee') || propsStr.includes('tea') || propsStr.includes('steaming') || propsStr.includes('test tube')) motions.push("Steam gently rising from the prop.");
-  if (propsStr.includes('smoke') || propsStr.includes('cigar')) motions.push("Smoke drifting slowly upwards.");
-  if (propsStr.includes('sword') || propsStr.includes('staff') || propsStr.includes('crystal')) motions.push("Soft magical glow pulsing from the prop.");
+  if (propsStr.includes('coffee') || propsStr.includes('tea') || propsStr.includes('steaming') || propsStr.includes('chai') || propsStr.includes('cup')) motions.push("Steam gently rising from the cup.");
+  if (propsStr.includes('smoke') || propsStr.includes('cigar') || propsStr.includes('incense')) motions.push("Smoke drifting slowly upwards.");
+  if (propsStr.includes('sword') || propsStr.includes('staff') || propsStr.includes('crystal') || propsStr.includes('magic') || propsStr.includes('rune') || propsStr.includes('wand')) motions.push("Soft magical glow pulsing from the prop.");
   if (propsStr.includes('umbrella')) motions.push("Rain drops softly hitting the umbrella.");
+  if (propsStr.includes('hologram') || propsStr.includes('screen') || propsStr.includes('cybernetic')) motions.push("Holographic elements glitching and glowing subtly.");
+  if (propsStr.includes('gear') || propsStr.includes('steampunk') || propsStr.includes('clockwork')) motions.push("Brass gears slowly turning and clicking.");
+  if (propsStr.includes('lantern') || propsStr.includes('diya') || propsStr.includes('lamp')) motions.push("Warm light flickering from the lamp.");
 
   // Outfit
-  if (outfitStr.includes('dress') || outfitStr.includes('robe') || outfitStr.includes('cloak') || outfitStr.includes('sari') || outfitStr.includes('tutu')) motions.push("Fabric swaying slightly in a subtle breeze.");
+  if (outfitStr.includes('dress') || outfitStr.includes('robe') || outfitStr.includes('cloak') || outfitStr.includes('sari') || outfitStr.includes('tutu') || outfitStr.includes('skirt') || outfitStr.includes('gown')) motions.push("Fabric swaying slightly in a subtle breeze.");
+  if (outfitStr.includes('armor') || outfitStr.includes('knight') || outfitStr.includes('metal')) motions.push("Subtle metallic glints from the armor moving.");
 
   // Hair/Details
-  if (detailsStr.includes('hair') || detailsStr.includes('bun') || identityStr.includes('flapper') || detailsStr.includes('wavy')) {
+  if (detailsStr.includes('hair') || detailsStr.includes('bun') || identityStr.includes('flapper') || detailsStr.includes('wavy') || outfitStr.includes('scarf')) {
       motions.push("Hair gently moving in a soft breeze.");
   }
+  if (detailsStr.includes('wings') || propsStr.includes('wings')) motions.push("Wings fluttering ever so slightly.");
 
   // Lighting
   if (lightingStr.includes('flash') || lightingStr.includes('strobe') || lightingStr.includes('lightning')) motions.push("Subtle light flashes illuminating the scene.");
-  if (lightingStr.includes('fog')) motions.push("Thick fog rolling slowly across the background.");
+  if (lightingStr.includes('fog') || lightingStr.includes('mist')) motions.push("Thick fog rolling slowly across the background.");
+  if (lightingStr.includes('sunlight') || lightingStr.includes('golden') || lightingStr.includes('beam')) motions.push("Dust motes dancing in the sunbeams.");
 
   // Base motion fallback if no triggers hit
   if (motions.length === 1 && (settingStr.length > 0 || lightingStr.length > 0)) {
       motions.push("Subtle atmospheric motion in the background.");
   }
 
-  const guardrail = "Static camera, no panning. Subject remains perfectly still. Keep facial features completely stable with no distortion or morphing.";
+  const guardrail = "Static camera, no panning. Subject remains perfectly still. Keep facial features completely stable with no distortion or morphing. Loop seamlessly.";
 
   const motionText = Array.from(new Set(motions)).join(' ');
   return `${motionText} ${guardrail}`;
@@ -236,15 +244,17 @@ export function generateSocialCaption(selections: PromptSelections): string {
   // Deduplicate our keyword pool
   validKeywords = Array.from(new Set(validKeywords));
 
-  // Capitalize and format into hashtags, limit to 6 descriptive tags
-  let hashtags = validKeywords.slice(0, 6).map(w => "#" + w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+  // Capitalize and format into hashtags, limit to 3 descriptive tags (total 5 max)
+  let hashtags = validKeywords.slice(0, 3).map(w => "#" + w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
   
   // Add standard baseline tags safely
   hashtags.push("#MetaAI", "#ImagineMe");
 
   const uniqueTags = Array.from(new Set(hashtags));
+  // Ensure we do not exceed 5 total
+  const finalTags = uniqueTags.slice(0, 5);
   
-  const finalCaption = captionParts.join(" ") + "\n\n" + uniqueTags.join(" ");
+  const finalCaption = captionParts.join(" ") + "\n\n" + finalTags.join(" ");
   return finalCaption.trim();
 }
 

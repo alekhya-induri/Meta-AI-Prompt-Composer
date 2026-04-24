@@ -158,6 +158,7 @@ export const EXAMPLE_PROMPTS = [
 ];
 
 export const CATEGORY_LABELS: Record<Category, string> = {
+  identity: "Identify / Persona",
   details: "Physical Features / Details",
   outfit: "Appearance / Outfit",
   setting: "Setting / Background",
