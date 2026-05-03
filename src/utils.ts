@@ -3,6 +3,7 @@ import { Category, PROMPT_OPTIONS, GENDER_FEMALE_ONLY, GENDER_MALE_ONLY, VIBE_SE
 export type PromptSelections = Partial<Record<Category, string[]>>;
 
 export type GenderFilter = 'all' | 'male' | 'female';
+export type PromptMode = 'imagine_me' | 'full_image';
 
 export function getFilteredOptions(category: Category, genderFilter: GenderFilter): string[] {
   const options = PROMPT_OPTIONS[category] || [];
@@ -43,7 +44,7 @@ export function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function generatePromptText(selections: PromptSelections, isManual: boolean = false, manualText: string = ""): string {
+export function generatePromptText(selections: PromptSelections, isManual: boolean = false, manualText: string = "", mode: PromptMode = 'imagine_me'): string {
   if (isManual) return manualText;
 
   const parts: string[] = [];
@@ -52,45 +53,82 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
   const identity = selections.identity?.[0];
   if (identity) {
     const startsWithVowel = /^[aeiou]/i.test(identity);
-    parts.push(`Imagine me as ${startsWithVowel ? 'an' : 'a'} ${identity}`);
+    if (mode === 'imagine_me') {
+      parts.push(`Imagine me as ${startsWithVowel ? 'an' : 'a'} ${identity}`);
+    } else {
+      parts.push(`${startsWithVowel ? 'An' : 'A'} ${identity}`);
+    }
   } else {
     // If no identity, still start with the core phrase if other things exist
-    const hasAnyKeys = Object.keys(selections).some(k => selections[k as Category]?.length && k !== 'identity');
-    if (hasAnyKeys) {
-        parts.push(`Imagine me`);
-    } else {
-        return ""; // Empty string if absolutely nothing is selected
+    if (mode === 'imagine_me') {
+      const hasAnyKeys = Object.keys(selections).some(k => selections[k as Category]?.length && k !== 'identity');
+      if (hasAnyKeys) {
+          parts.push(`Imagine me`);
+      }
     }
   }
 
   // Outfit
   const outfit = selections.outfit?.join(', ');
-  if (outfit) parts.push(`wearing ${outfit}`);
+  if (outfit) {
+    if (parts.length === 0) {
+      parts.push(`Someone wearing ${outfit}`);
+    } else {
+      parts.push(`wearing ${outfit}`);
+    }
+  }
 
   // Setting / Context
   const setting = selections.setting?.join(', ');
   const timeOfDay = selections.timeOfDay?.[0];
+  let settingPart = "";
   if (setting) {
     if (timeOfDay) {
-      parts.push(`in a ${setting} at ${timeOfDay}`);
+      settingPart = `in a ${setting} at ${timeOfDay}`;
     } else {
-      parts.push(`in a ${setting}`);
+      settingPart = `in a ${setting}`;
     }
   } else if (timeOfDay) {
-    parts.push(`at ${timeOfDay}`);
+    settingPart = `at ${timeOfDay}`;
+  }
+
+  if (settingPart) {
+    if (parts.length === 0) {
+      parts.push(settingPart.charAt(0).toUpperCase() + settingPart.slice(1));
+    } else {
+      parts.push(settingPart);
+    }
   }
 
   // Details / Features / Action
   const details = selections.details?.join(', ');
-  if (details) parts.push(`with ${details}`);
+  if (details) {
+    if (parts.length === 0) {
+      parts.push(`With ${details}`);
+    } else {
+      parts.push(`with ${details}`);
+    }
+  }
 
   // Base Action / Pose
   const pose = selections.pose?.join(', ');
-  if (pose) parts.push(pose);
+  if (pose) {
+    if (parts.length === 0) {
+      parts.push(pose.charAt(0).toUpperCase() + pose.slice(1));
+    } else {
+      parts.push(pose);
+    }
+  }
 
   // Props
   const props = selections.props?.join(', ');
-  if (props) parts.push(`with ${props}`);
+  if (props) {
+    if (parts.length === 0) {
+      parts.push(`With ${props}`);
+    } else {
+      parts.push(`with ${props}`);
+    }
+  }
 
   // Collect the rest of the descriptive modifiers
   const modifiers: string[] = [];
@@ -102,11 +140,18 @@ export function generatePromptText(selections: PromptSelections, isManual: boole
   if (selections.colorPalette?.length) modifiers.push(...selections.colorPalette);
   if (selections.quality?.length) modifiers.push(...selections.quality);
 
-  if (modifiers.length > 0) {
-      return parts.join(', ') + '. ' + modifiers.join(', ') + '.';
+  if (parts.length === 0 && modifiers.length === 0) {
+    return "";
   }
 
-  return parts.join(', ') + (parts.length > 0 ? '.' : '');
+  const mainSentence = parts.join(', ');
+  const capitalizedMainSentence = mainSentence.charAt(0).toUpperCase() + mainSentence.slice(1);
+
+  if (modifiers.length > 0) {
+      return capitalizedMainSentence + '. ' + modifiers.join(', ') + '.';
+  }
+
+  return capitalizedMainSentence + (parts.length > 0 ? '.' : '');
 }
 
 export function generateAnimationPrompt(selections: PromptSelections): string {
@@ -165,7 +210,7 @@ export function generateAnimationPrompt(selections: PromptSelections): string {
   return `${motionText} ${guardrail}`;
 }
 
-export function generateSocialCaption(selections: PromptSelections): string {
+export function generateSocialCaption(selections: PromptSelections, mode: PromptMode = 'imagine_me'): string {
   const identities = selections.identity || [];
   const settings = selections.setting || [];
   const moods = selections.mood || [];
@@ -248,7 +293,10 @@ export function generateSocialCaption(selections: PromptSelections): string {
   let hashtags = validKeywords.slice(0, 3).map(w => "#" + w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
   
   // Add standard baseline tags safely
-  hashtags.push("#MetaAI", "#ImagineMe");
+  hashtags.push("#MetaAI");
+  if (mode === 'imagine_me') {
+    hashtags.push("#ImagineMe");
+  }
 
   const uniqueTags = Array.from(new Set(hashtags));
   // Ensure we do not exceed 5 total
@@ -263,23 +311,27 @@ export interface ValidationWarning {
   message: string;
 }
 
-export function validatePrompt(selections: PromptSelections, promptText: string): ValidationWarning[] {
+export function validatePrompt(selections: PromptSelections, promptText: string, mode: PromptMode = 'imagine_me'): ValidationWarning[] {
   const warnings: ValidationWarning[] = [];
   const isEmpty = !promptText || promptText.trim().length === 0;
 
   if (isEmpty) {
-    return [{ type: 'error', message: 'Prompt is empty. Start by picking an Identity or Setting.' }];
+    return [{ type: 'error', message: 'Prompt is empty. Start by picking some options.' }];
   }
 
-  if (!selections.identity || selections.identity.length === 0) {
+  if (mode === 'imagine_me' && (!selections.identity || selections.identity.length === 0)) {
     warnings.push({ type: 'error', message: 'Missing Identity. Meta AI Imagine me requires a clear subject.' });
   }
 
-  if (promptText.length > 500) {
-    warnings.push({ type: 'warning', message: 'Prompt is very long. Meta AI might drop tokens after 500 characters.' });
+  if (mode === 'full_image' && !selections.identity && !selections.setting) {
+    warnings.push({ type: 'warning', message: 'Consider adding a subject (Identity) or a Setting to anchor the image.' });
   }
 
-  if (selections.cameraAngle?.some(a => ['full-body', 'wide shot', 'top-down'].includes(a))) {
+  if (promptText.length > 500) {
+    warnings.push({ type: 'warning', message: 'Prompt is very long. Generators might drop tokens after 500 characters.' });
+  }
+
+  if (mode === 'imagine_me' && selections.cameraAngle?.some(a => ['full-body', 'wide shot', 'top-down'].includes(a))) {
     warnings.push({ type: 'warning', message: 'Distance Warning: Framing from too far away can distort facial features in "Imagine me". Consider "medium shot" or "close-up".' });
   }
 
@@ -292,7 +344,7 @@ export function validatePrompt(selections: PromptSelections, promptText: string)
      warnings.push({ type: 'warning', message: 'Beachwear in outer space? The AI might struggle with this abstract concept.' });
   }
 
-  if (!selections.setting && !selections.outfit) {
+  if (mode === 'imagine_me' && !selections.setting && !selections.outfit) {
      // Not an error, but a suggestion
      warnings.push({ type: 'warning', message: 'Consider adding a Setting or Outfit for more concrete context.' });
   }

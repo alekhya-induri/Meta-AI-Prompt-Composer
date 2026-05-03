@@ -4,7 +4,7 @@ import {
   Trash2, History, Settings2, HelpCircle, Lightbulb, FileText, FileJson, Video, MessageSquare, Image as ImageIcon, Github
 } from 'lucide-react';
 import { PROMPT_OPTIONS, CATEGORY_LABELS, Category, EXAMPLE_PROMPTS, OPTION_DESCRIPTIONS } from './data';
-import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt, generateSocialCaption, GenderFilter, getFilteredOptions, getRecommendedOptions } from './utils';
+import { PromptSelections, generatePromptText, validatePrompt, generateSurpriseMeSelections, pickRandom, exportPromptToFile, cn, generateAnimationPrompt, generateSocialCaption, GenderFilter, getFilteredOptions, getRecommendedOptions, PromptMode } from './utils';
 
 // --- Types ---
 interface Preset {
@@ -29,8 +29,9 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('build');
   const [outputTab, setOutputTab] = useState<'image' | 'video' | 'caption'>('image');
   
-  // State: Filter
+  // State: Filter and Mode
   const [genderFilter, setGenderFilter] = useState<GenderFilter>('all');
+  const [promptMode, setPromptMode] = useState<PromptMode>('imagine_me');
 
   // State: Selections
   const [selections, setSelections] = useState<PromptSelections>({});
@@ -76,11 +77,11 @@ export default function App() {
   }, [history]);
 
   // Derived state
-  const generatedText = useMemo(() => generatePromptText(selections, false), [selections]);
+  const generatedText = useMemo(() => generatePromptText(selections, false, "", promptMode), [selections, promptMode]);
   const activePromptText = isManualEdit ? manualText : generatedText;
   const animationPromptText = useMemo(() => generateAnimationPrompt(selections), [selections]);
-  const socialCaptionText = useMemo(() => generateSocialCaption(selections), [selections]);
-  const validationWarnings = useMemo(() => validatePrompt(selections, activePromptText), [selections, activePromptText]);
+  const socialCaptionText = useMemo(() => generateSocialCaption(selections, promptMode), [selections, promptMode]);
+  const validationWarnings = useMemo(() => validatePrompt(selections, activePromptText, promptMode), [selections, activePromptText, promptMode]);
   const recommendedOptions = useMemo(() => getRecommendedOptions(selections), [selections]);
 
   // Handlers
@@ -183,7 +184,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-purple-700 tracking-tight">
-                Meta AI "Imagine Me" Vibe Generator
+                Meta AI Prompt & Vibe Generator
               </h1>
               <p className="text-sm text-slate-500 font-medium">Your complete pipeline for effortless prompts, animations, and captions.</p>
             </div>
@@ -243,6 +244,29 @@ export default function App() {
               {/* Left Panel: Inputs */}
               <div className="w-full md:w-1/3 lg:w-1/4 flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white md:max-h-full md:overflow-hidden shadow-sm flex-shrink-0 order-2 md:order-1">
                 <div className="p-4 border-b border-slate-100 bg-white/50 space-y-3">
+                  
+                  {/* Mode Toggle */}
+                  <div className="flex bg-slate-100 p-1 rounded-lg">
+                    <button
+                      onClick={() => setPromptMode('imagine_me')}
+                      className={cn(
+                        "flex-1 py-1.5 px-2 text-xs font-bold rounded-md transition-all uppercase tracking-wider",
+                        promptMode === 'imagine_me' ? "bg-white shadow-sm text-blue-600" : "text-slate-500 hover:text-slate-700"
+                      )}
+                    >
+                      Imagine Me
+                    </button>
+                    <button
+                      onClick={() => setPromptMode('full_image')}
+                      className={cn(
+                        "flex-1 py-1.5 px-2 text-xs font-bold rounded-md transition-all uppercase tracking-wider",
+                        promptMode === 'full_image' ? "bg-white shadow-sm text-purple-600" : "text-slate-500 hover:text-slate-700"
+                      )}
+                    >
+                      Full Image
+                    </button>
+                  </div>
+
                   <div className="flex gap-2">
                     <button onClick={handleSurpriseMe} className="flex-1 py-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-lg text-sm font-medium transition-all shadow-sm flex items-center justify-center gap-2">
                       <Sparkles size={16}/> Surprise Me
@@ -638,21 +662,21 @@ export default function App() {
           {/* --- HELP TAB --- */}
           {activeTab === 'help' && (
             <div className="w-full bg-white/60 backdrop-blur-md rounded-2xl border border-white shadow-sm p-8 overflow-y-auto max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">How to use "Imagine me"</h2>
+              <h2 className="text-3xl font-bold mb-8">How to use this Generator</h2>
               
               <div className="prose prose-slate max-w-none">
                 <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-8">
                   <h3 className="text-lg font-bold text-blue-900 mt-0">What is this?</h3>
                   <p className="text-blue-800 mb-0">
-                    This composer helps you build highly effective, descriptive prompts specifically optimized for Meta AI's "Imagine me" feature. By structuring your requests, you get vastly better, more consistent image generation results.
+                    This composer helps you build highly effective, descriptive prompts specifically optimized for Meta AI's "Imagine me" feature as well as general full image generation. By structuring your requests, you get vastly better, more consistent image generation results.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                   <div>
-                    <h4 className="font-bold text-lg mb-3 flex items-center gap-2"><Sparkles className="text-purple-500"/> Why Specificity Matters</h4>
+                    <h4 className="font-bold text-lg mb-3 flex items-center gap-2"><Sparkles className="text-purple-500"/> Two Modes</h4>
                     <p className="text-slate-600 text-sm">
-                      Meta AI works best when given a clear identity, a defined setting, and artistic direction. A prompt like <em>"Imagine me"</em> rarely yields great results compared to <em>"Imagine me as a cowboy on a desert road at sunset, cinematic lighting."</em>
+                      Toggle between <strong>Imagine Me</strong> (for AI selfies) and <strong>Full Image</strong> (for general image generation). The builder automatically adjusts the formatting and prompt structure for the best results depending on the mode you choose.
                     </p>
                   </div>
                   <div>
